@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Photos de Joël | Admin{% endblock %}
+
+{% block body %}
+
+<h1>Espace Admin</h1>
+<h2>Informations générale du site</h2>
+
+{{ form_start(form)}}
+
+    {{ form_row(form.titre_du_site_header)}}
+    {{ form_row(form.texte_header)}}
+    {{ form_row(form.mot_page_accueil)}}
+    {{ form_row(form.photo_accueil_path)}}
+    {{ form_row(form.text_footer)}}
+
+    <input type="submit" value="Valider">
+{{ form_end(form)}}
+    
+{% endblock %}

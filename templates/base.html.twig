@@ -6,7 +6,39 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+
+        <header>
+            <div>
+                <img src="" alt="Logo">
+                <h1>Titre</h1>
+            </div>
+            <nav>
+                <a href="">Photos</a>
+                <a href="">Expos</a>
+                <a href="">Actualités</a>
+                <a href="">Liens</a>
+                <a href="">Contact</a>
+            </nav>
+        </header>
+
+        {# Flash messages #}
+        {% for message in app.flashes('success') %}
+        <div class="success">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+        <div class="error">
+            {{ message }}
+        </div>
+        {% endfor %}
+        
         {% block body %}{% endblock %}
+
+        <footer>
+            <h2>Footer</h2>
+        </footer>
+
         {% block javascripts %}{% endblock %}
     </body>
 </html>
