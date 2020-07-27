@@ -6,11 +6,11 @@
 
     <h1>Espace Admin</h1>
 
-    <a href="{{ path('general') }}">Informations générales</a>
+    <a href="{{ path('admin_general') }}">Informations générales</a>
     <a href="">Actualités</a>
     <a href="">Expos</a>
     <a href="">Liens</a>
-    <a href="">Catégories Photos</a>
+    <a href="{{ path('admin_categories') }}">Catégories</a>
     <a href="">Photos</a>
 
 {% endblock %}

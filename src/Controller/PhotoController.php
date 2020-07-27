@@ -2,19 +2,25 @@
 
 namespace App\Controller;
 
+use App\Entity\Photo;
+use App\Form\CatType;
+use App\Form\PhotoType;
+use App\Entity\PhotoCategorie;
 use App\Repository\GeneralRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-    /**
-     * @Route("/")
-     */
-class HomeController extends AbstractController
+/**
+ * @Route("/photo")
+ */
+class PhotoController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/", name="photo")
      */
-    public function index(GeneralRepository $grepo)
+    public function index()
     {
 
         $general = $grepo->findOneBy(['id' => 1]);
@@ -30,8 +36,20 @@ class HomeController extends AbstractController
 
 
 
-        return $this->render('home/index.html.twig', [
-            'general' => $general,
+        return $this->render('photo/index.html.twig', [
+            'controller_name' => 'PhotoController',
         ]);
     }
+
+    /**
+     * @Route("/{cat_id}", name="photo")
+     */
+    public function photo_cat()
+    {
+        return $this->render('photo/index.html.twig', [
+            'controller_name' => 'PhotoController',
+        ]);
+    }
+
 }
+

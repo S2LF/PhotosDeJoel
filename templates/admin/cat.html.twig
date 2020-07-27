@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Photos de Joël | Admin - Catégories{% endblock %}
+
+{% block body %}
+
+<h1>Espace Admin</h1>
+<h2>Gestions des catégories</h2>
+
+{% if cats == null %}
+    <h3>Pas de catégorie</h3>
+
+{% else %}
+    {% for cat in cats %}
+        <h3>{{ cat.titre }} <a href="{{ path('edit_cat', {'id':cat.id})}}"><i class="fas fa-pen-square"></i></a></h3> 
+        <img style="width: 100px" src="{{ asset('img/' ~ cat.photoCoverPath ) }}" alt="{{ cat.titre }}">
+    {% endfor %}
+{% endif %}
+
+<p><a href="{{ path('add_cat')}}">Ajouter une catégorie</a></p>
+
+{% endblock %}
