@@ -8,7 +8,11 @@
 
 
 {% if general.photoAccueilPath == NULL %}
+<<<<<<< HEAD
     <img style="width: 350px" src="{{ asset('img/default/Default.png' ) }}" alt="">
+=======
+    <img style="width: 350px" src="{{ asset('img/default.png' ) }}" alt="">
+>>>>>>> 60bfd1c685a86b328658a6002f28f77c6861c966
 {% else %}
     <img style="width: 350px" src="{{ asset('img/'~ general.photoAccueilPath) }}" alt="">
 {% endif %}
