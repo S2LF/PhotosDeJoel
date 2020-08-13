@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Photos de Joël | Créer exposition{% endblock %}
+
+{% block body %}
+
+{% include "admin/adminNav.html.twig" %}
+
+
+<h1>Espace Admin</h1>
+<h2>Gestion des expositions</h2>
+
+{% if expos|length == 0 %}
+    <p>Aucune exposition</p>
+{% else %}
+    <section class="draggable">
+        {% for expo in expos %}
+            <article data-id="{{ expo.id }}" >
+                <p>{{expo.titre}} - {{expo.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_actu_edit', {'id':expo.id})}}"><i class="fas fa-pen-square"></i></a></p>
+                <p>{{ expo.contenu }}</p>
+            </article>
+        {% endfor %}
+    </section>    
+{% endif %}
+
+<a href="{{ path('admin_expo_add') }}">Ajouter une actualité</a>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+<script>
+  jQuery('.draggable').sortable({
+    stop:function(event, ui){
+      let id = ui.item.attr('data-id')
+      console.log("id:"+id)
+      let position = ui.item.index()
+      console.log("pos:"+position)
+      $.post(
+        "{{ path('admin_expo_sort') }}",
+        {
+          'expo_id': id,
+          'position': position
+        },
+        function(data){
+          console.log(data)
+        }
+      )
+
+    }
+    
+
+
+
+  })
+</script>
+
+{% endblock %}

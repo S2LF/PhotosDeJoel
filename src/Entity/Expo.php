@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ExpoRepository;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +37,17 @@ class Expo
      * @ORM\Column(type="string", length=255)
      */
     private $contenu;
+
+    /**
+     * @Gedmo\SortablePosition
+     * @ORM\Column(type="integer")
+     */
+    private $position;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $date_Event;
 
     public function getId(): ?int
     {
@@ -86,6 +98,30 @@ class Expo
     public function setContenu(string $contenu): self
     {
         $this->contenu = $contenu;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): self
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    public function getDateEvent(): ?\DateTimeInterface
+    {
+        return $this->date_Event;
+    }
+
+    public function setDateEvent(?\DateTimeInterface $date_Event): self
+    {
+        $this->date_Event = $date_Event;
 
         return $this;
     }

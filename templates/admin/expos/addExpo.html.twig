@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Photos de Joël | Créer catégorie{% endblock %}
+
+{% block body %}
+
+{% include "admin/adminNav.html.twig" %}
+
+
+<h1>Espace Admin</h1>
+<h2>Créer/Modifier une catégorie</h2>
+
+{{ form_start(form)}}
+
+    {{ form_row(form.titre)}}
+    {{ form_row(form.date_Event)}}
+    {{ form_row(form.lieu)}}
+    {{ form_row(form.contenu)}}
+
+    <input type="submit" value="Valider">
+{{ form_end(form)}}
+    
+{% endblock %}
+

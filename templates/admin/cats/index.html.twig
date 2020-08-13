@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Photos de Joël | Admin - Catégories{% endblock %}
+
+{% block body %}
+
+{% include "admin/adminNav.html.twig" %}
+
+
+<h1>Espace Admin</h1>
+<h2>Gestions des catégories</h2>
+
+{% if cats == null %}
+    <h3>Pas de catégorie</h3>
+{% else %}  
+
+    {% if 'admin/cat_add' in app.request.uri %}
+        {% for cat in cats %}
+            <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">
+                <h3>{{ cat.titre }}
+                <a href="{{ path('admin_edit_cat', {'id':cat.id})}}"><i class="fas fa-pen-square"></i></a></h3></a>
+            <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">
+                {% if cat.photoCoverPath ==  null %}
+                    <img style="width: 100px" src="{{ asset('img/default/Default.png' ) }}" alt="{{ cat.titre }}">
+                {% else %}
+                    <img style="width: 100px" src="{{ asset('img/' ~ cat.photoCoverPath ) }}" alt="{{ cat.titre }}">
+                {% endif %}
+            </a>
+            
+
+        {% endfor %}
+
+    {% endif %}
+
+{% endif %}
+
+    <p><a href="{{ path('admin_add_cat')}}">Ajouter une catégorie</a></p>
+
+{% endblock %}

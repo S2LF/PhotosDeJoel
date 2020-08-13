@@ -2,29 +2,23 @@
 
 namespace App\Form;
 
-use App\Entity\General;
+use App\Entity\PhotoCategorie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class GeneralType extends AbstractType
+class CatType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titre_du_site_header', TextType::class, [
-                'label' => 'Titre du site* :'
+            ->add('titre', TextType::class, [
+                'label' => 'Titre*:'
             ])
-            ->add('texte_header', TextareaType::class, [
-                'label' => 'Texte en-tête :'])
-            ->add('mot_page_accueil', TextareaType::class, [
-                'label' => "Texte page d'accueil :"
-])
-            ->add('photo_accueil_path', FileType::class, [
+            ->add('photo_cover_path', FileType::class, [
                 'label' => 'Photo (JPG/PNG/GIF, max 1Mo)*',
 
                 // Unmapped because not associated to any entity property
@@ -32,7 +26,7 @@ class GeneralType extends AbstractType
                 
                 // make it optional so you don't have to re-upload the PDF file
                 // every time you edit the Product details
-                'required' => true,
+                'required' => false,
 
                 // unmapped fields can't define their validation using annotations
                 // in the associated entity, so you can use the PHP constraint classes
@@ -48,16 +42,13 @@ class GeneralType extends AbstractType
                     ])
                 ]
             ])
-            ->add('text_footer', TextType::class, [
-                'label' => 'Texte pied de page*:'
-            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => General::class,
+            'data_class' => PhotoCategorie::class,
         ]);
     }
 }

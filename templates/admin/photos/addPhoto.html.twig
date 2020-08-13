@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Photos de Joël | Admin{% endblock %}
+
+{% block body %}
+
+    <h1>Espace Admin</h1>
+
+    {% include "admin/adminNav.html.twig" %}
+
+    {% if 'add' in app.request.uri %}    
+        {{ form_start(form)}}
+            {{ form_row(form.titre)}}
+            {{ form_row(form.path)}}
+            <input type="submit" value="Valider">
+        {{ form_end(form)}}
+    {% else %}
+
+        <figure>
+            <img style="width: 100px;" src="{{ asset('img/'~ photo.path) }}" alt="{{ photo.titre }}">
+        </figure>
+
+        {{ form_start(form)}}
+            {{ form_row(form.titre)}}
+            <input type="submit" value="Valider">
+        {{ form_end(form)}}
+    {% endif %}
+
+{% endblock %}
