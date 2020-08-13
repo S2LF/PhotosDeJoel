@@ -14,7 +14,7 @@
     <h3>Pas de catégorie</h3>
 {% else %}  
 
-    {% if 'admin/cat_add' in app.request.uri %}
+    {% if 'admin/cat' in app.request.uri %}
         {% for cat in cats %}
             <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">
                 <h3>{{ cat.titre }}

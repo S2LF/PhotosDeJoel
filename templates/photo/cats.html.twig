@@ -1,10 +1,10 @@
 {% for cat in cats %}
-<a href="{{ path('cat_photos', {'id':cat.id}) }}">
-    <h3>{{ cat.titre }}</h3>
-    {% if cat.photoCoverPath ==  null %}
-    <img style="width: 100px" src="{{ asset('img/default/Default.png' ) }}" alt="{{ cat.titre }}">
+    <a href="{{ path('cat_photos', {'id':cat.id}) }}">
+        <h3>{{ cat.titre }}</h3>
+        {% if cat.photoCoverPath ==  null %}
+        <img style="width: 100px" src="{{ asset('img/default/Default.png' ) }}" alt="{{ cat.titre }}">
 
-    {% endif %}
-    <img style="width: 100px" src="{{ asset('img/' ~ cat.photoCoverPath ) }}" alt="{{ cat.titre }}">
-</a>
+        {% endif %}
+        <img style="width: 100px" src="{{ asset('img/' ~ cat.photoCoverPath ) }}" alt="{{ cat.titre }}">
+    </a>
 {% endfor %}

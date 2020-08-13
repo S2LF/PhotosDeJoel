@@ -18,10 +18,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminCatController extends AbstractController
 {
 
-
-
     /**
-     * @Route("/cat_add", name="admin_categories")
+     * @Route("/cat", name="admin_categories")
      */
     public function Index(GeneralRepository $grepo, PhotoCategorieRepository $pcrepo)
     {
