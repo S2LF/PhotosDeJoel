@@ -16,7 +16,7 @@
     <section class="draggable">
         {% for expo in expos %}
             <article data-id="{{ expo.id }}" >
-                <p>{{expo.titre}} - {{expo.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_actu_edit', {'id':expo.id})}}"><i class="fas fa-pen-square"></i></a></p>
+                <p>{{expo.titre}} - {{expo.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_expo_edit', {'id':expo.id})}}"><i class="fas fa-pen-square"></i></a></p>
                 <p>{{ expo.contenu }}</p>
             </article>
         {% endfor %}
