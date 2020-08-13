@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les Photos de Joël | Créer catégorie{% endblock %}
+{% block title %}Les Photos de Joël | Créer lien{% endblock %}
 
 {% block body %}
 
@@ -8,22 +8,22 @@
 
 
 <h1>Espace Admin</h1>
-<h2>Gestion des actualités</h2>
+<h2>Gestion des lien</h2>
 
-{% if actus|length == 0 %}
-    <p>Aucune actualité</p>
+{% if liens|length == 0 %}
+    <p>Aucun lien</p>
 {% else %}
     <section class="draggable">
-        {% for actu in actus %}
-            <article data-id="{{ actu.id }}" >
-                <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square"></i></a></p>
-                <p>{{ actu.contenu|raw}}</p>
+        {% for lien in liens %}
+            <article data-id="{{ lien.id }}" >
+                <p>{{lien.titre}}<a href="{{ path('admin_lien_edit', {'id':lien.id})}}"><i class="fas fa-pen-square"></i></a></p>
+                <p>{{ lien.lien }}</p>
             </article>
         {% endfor %}
     </section>    
 {% endif %}
 
-<a href="{{ path('admin_actu_add') }}">Ajouter une actualité</a>
+<a href="{{ path('admin_lien_add') }}">Ajouter un lien</a>
 {% endblock %}
 
 {% block javascripts %}
@@ -37,9 +37,9 @@
       let position = ui.item.index()
       console.log("pos:"+position)
       $.post(
-        "{{ path('admin_actu_sort') }}",
+        "{{ path('admin_lien_sort') }}",
         {
-          'actu_id': id,
+          'lien_id': id,
           'position': position
         },
         function(data){

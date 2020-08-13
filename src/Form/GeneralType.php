@@ -4,12 +4,12 @@ namespace App\Form;
 
 use App\Entity\General;
 use Symfony\Component\Form\AbstractType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class GeneralType extends AbstractType
 {
@@ -19,9 +19,9 @@ class GeneralType extends AbstractType
             ->add('titre_du_site_header', TextType::class, [
                 'label' => 'Titre du site* :'
             ])
-            ->add('texte_header', TextareaType::class, [
+            ->add('texte_header', CKEditorType::class, [
                 'label' => 'Texte en-tête :'])
-            ->add('mot_page_accueil', TextareaType::class, [
+            ->add('mot_page_accueil', CKEditorType::class, [
                 'label' => "Texte page d'accueil :"
 ])
             ->add('photo_accueil_path', FileType::class, [

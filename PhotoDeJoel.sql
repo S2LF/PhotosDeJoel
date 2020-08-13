@@ -25,14 +25,16 @@ CREATE TABLE IF NOT EXISTS `actualite` (
   `contenu` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `position` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table photodejoel.actualite : ~3 rows (environ)
+-- Listage des données de la table photodejoel.actualite : ~5 rows (environ)
 /*!40000 ALTER TABLE `actualite` DISABLE KEYS */;
 INSERT INTO `actualite` (`id`, `categorie`, `titre`, `date_creation`, `contenu`, `position`) VALUES
 	(1, 'test', 'test', '2020-08-12 19:40:00', 'test', 0),
 	(2, 'test2', 'test2', '2020-08-13 13:40:08', 'test2Edit', 2),
-	(3, 'test3', 'test3', '2020-08-13 11:59:02', 'test3', 1);
+	(3, 'test3', 'test3', '2020-08-13 11:59:02', 'test3', 1),
+	(4, 'test', 'test', '2020-08-13 16:14:21', '<p><strong>Test</strong></p>\r\n\r\n<p><em>Test</em></p>\r\n\r\n<p><s>Test</s></p>', 3),
+	(5, 'testW', 'W', '2020-08-13 16:25:13', '<p style="text-align:center">Test</p>\r\n\r\n<p>Test</p>\r\n\r\n<p style="text-align:right">Test</p>', 4);
 /*!40000 ALTER TABLE `actualite` ENABLE KEYS */;
 
 -- Listage de la structure de la table photodejoel. doctrine_migration_versions
@@ -43,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
   PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Listage des données de la table photodejoel.doctrine_migration_versions : ~1 rows (environ)
+-- Listage des données de la table photodejoel.doctrine_migration_versions : ~0 rows (environ)
 /*!40000 ALTER TABLE `doctrine_migration_versions` DISABLE KEYS */;
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
 	('DoctrineMigrations\\Version20200720141255', '2020-08-03 15:10:10', 129);
@@ -79,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `general` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table photodejoel.general : ~1 rows (environ)
+-- Listage des données de la table photodejoel.general : ~0 rows (environ)
 /*!40000 ALTER TABLE `general` DISABLE KEYS */;
 INSERT INTO `general` (`id`, `titre_du_site_header`, `texte_header`, `mot_page_accueil`, `photo_accueil_path`, `text_footer`) VALUES
 	(1, 'Titre du site', 'Texte en-tête', 'Texte page d\'accueil', 'general/home-5f2975afd1789.jpeg', 'Text pied de page');
@@ -90,11 +92,15 @@ CREATE TABLE IF NOT EXISTS `lien` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `titre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lien` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `position` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table photodejoel.lien : ~0 rows (environ)
+-- Listage des données de la table photodejoel.lien : ~2 rows (environ)
 /*!40000 ALTER TABLE `lien` DISABLE KEYS */;
+INSERT INTO `lien` (`id`, `titre`, `lien`, `position`) VALUES
+	(1, 'titre1', 'lien1', 1),
+	(2, 'titre2', 'lien2', 0);
 /*!40000 ALTER TABLE `lien` ENABLE KEYS */;
 
 -- Listage de la structure de la table photodejoel. photo
@@ -109,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `photo` (
   CONSTRAINT `FK_14B78418339EEE3E` FOREIGN KEY (`photo_categorie_id`) REFERENCES `photo_categorie` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table photodejoel.photo : ~5 rows (environ)
+-- Listage des données de la table photodejoel.photo : ~4 rows (environ)
 /*!40000 ALTER TABLE `photo` DISABLE KEYS */;
 INSERT INTO `photo` (`id`, `photo_categorie_id`, `titre`, `path`, `exifs`) VALUES
 	(1, 1, 'TestEdit', '/photo/Titre Catégorie/photo/test-5f29773cb50de.jpeg', 'a:0:{}'),
@@ -127,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `photo_categorie` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table photodejoel.photo_categorie : ~3 rows (environ)
+-- Listage des données de la table photodejoel.photo_categorie : ~2 rows (environ)
 /*!40000 ALTER TABLE `photo_categorie` DISABLE KEYS */;
 INSERT INTO `photo_categorie` (`id`, `titre`, `photo_cover_path`) VALUES
 	(1, 'Titre Catégorie', '/photo/Titre/cover/titre-5f282a27ceb14.jpeg'),

@@ -19,6 +19,16 @@ class LienRepository extends ServiceEntityRepository
         parent::__construct($registry, Lien::class);
     }
 
+    public function findAllOrderByPos(){
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager ->createQuery(
+                    "SELECT l
+                        FROM App\Entity\Lien l
+                        ORDER BY l.position ASC"
+        );
+        return $query->execute();
+    }
+
     // /**
     //  * @return Lien[] Returns an array of Lien objects
     //  */
