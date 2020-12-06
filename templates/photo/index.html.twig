@@ -1,3 +1,29 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Les Photos de Joël | Catégories{% endblock %}
+
+
+
+{% block body %}
+    <section class="flex center cat_photo">    
+        {% for cat in cats %}
+            <article>
+                <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">
+                    <h3>{{ cat.titre }}
+                        <a href="{{ path('admin_edit_cat', {'id':cat.id})}}"></a></h3></a>
+                        <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">
+                            
+                            {% set photos = cat.photos|sort((a, b) => a.position <=> b.position )%}
+                            
+                            {% if photos != null %}
+                            {% set p = photos|first %}
+                            <img style="width: 100px" src="{{ asset('img/' ~ p.path ) }}" alt="{{ cat.titre }}">
+                            {% else %}
+                            <img style="width: 100px" src="{{ asset('img/default/Default.png' ) }}" alt="{{ cat.titre }}">
+                            {% endif %}
+                        </a>
+            </article>
+        {% endfor %}
+                </section>
+
 {% endblock %}

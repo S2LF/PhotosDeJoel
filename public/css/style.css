@@ -1,7 +1,88 @@
+/* GLOBAL RULES */
+
+* {
+    box-sizing: border-box;
+}
+a{
+    color: inherit;
+    text-decoration: inherit;
+}
+
+
+.center{
+    text-align: center;
+}
+.bold{
+    font-weight: bold;
+}
+.flex{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
 
 
 
+body{
+    color:white;
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),url("../../img/bg/fontimage.jpg");
+    font-family: 'Comic Neue', cursive;
 
+    height: 100vh;
+}
+.main-wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* Header */ 
+header h1{
+    font-size: 5em;
+    font-weight: bold;
+    margin: 0.25em;
+}
+
+nav{
+    text-align: center;
+    margin: 2em;
+}
+nav a {
+    padding-left: 4em;
+    padding-right: 4em;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Home */
+
+.home{
+    margin-top: 0;
+    margin-bottom: 0;
+    max-height: 560px;
+}
+
+/* Cat */
+
+.cat_photo{
+    flex-basis: 25%;
+}
+
+
+/* Admin */
+
+#admin_nav{
+    display: flex;
+    flex-direction: column;
+}
+.admin nav a{
+    padding: 0;
+}
+
+.admin_cat_photo{
+    flex-basis: 33.33333%;
+}
 
 /* Detail EXIF */
 

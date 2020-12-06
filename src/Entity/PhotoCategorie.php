@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PhotoCategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,14 +26,15 @@ class PhotoCategorie
     private $titre;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $photo_cover_path;
-
-    /**
      * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="photo_categorie")
      */
     private $photos;
+
+    /**
+     * @Gedmo\SortablePosition
+     * @ORM\Column(type="integer")
+     */
+    private $position;
 
     public function __construct()
     {
@@ -52,18 +54,6 @@ class PhotoCategorie
     public function setTitre(string $titre): self
     {
         $this->titre = $titre;
-
-        return $this;
-    }
-
-    public function getPhotoCoverPath(): ?string
-    {
-        return $this->photo_cover_path;
-    }
-
-    public function setPhotoCoverPath(string $photo_cover_path): self
-    {
-        $this->photo_cover_path = $photo_cover_path;
 
         return $this;
     }
@@ -98,4 +88,20 @@ class PhotoCategorie
 
         return $this;
     }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): self
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+
+
+
 }

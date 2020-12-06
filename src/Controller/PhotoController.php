@@ -8,19 +8,20 @@ use App\Form\PhotoType;
 use App\Entity\PhotoCategorie;
 use App\Repository\GeneralRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\PhotoCategorieRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/photo")
+ * @Route("/category")
  */
 class PhotoController extends AbstractController
 {
     /**
-     * @Route("/", name="photo")
+     * @Route("/", name="cats")
      */
-    public function index()
+    public function index(GeneralRepository $grepo, PhotoCategorieRepository $pcrepo)
     {
 
         $general = $grepo->findOneBy(['id' => 1]);
@@ -34,10 +35,14 @@ class PhotoController extends AbstractController
             ];
         }
 
+        $cats =  $pcrepo->findAllOrderByPos();
+
 
 
         return $this->render('photo/index.html.twig', [
-            'controller_name' => 'PhotoController',
+            'general' => $general,
+            'cats' => $cats
+
         ]);
     }
 
