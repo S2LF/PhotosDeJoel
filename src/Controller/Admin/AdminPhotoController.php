@@ -7,10 +7,12 @@ use App\Form\PhotoType;
 use App\Form\PhotoEditType;
 use App\Service\FileUploader;
 use App\Entity\PhotoCategorie;
+use App\Repository\PhotoRepository;
 use App\Repository\GeneralRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PhotoCategorieRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -23,7 +25,7 @@ class AdminPhotoController extends AbstractController
     /**
      * @Route("/cat/{id}/photos", name="admin_cat_photos")
      */
-    public function index(PhotoCategorie $cat, GeneralRepository $grepo, PhotoCategorieRepository $pcrepo){
+    public function index(PhotoCategorie $cat, GeneralRepository $grepo, PhotoCategorieRepository $pcrepo, PhotoRepository $prepo){
         $general = $grepo->findOneBy(['id' => 1]);
         if($general == null){
             $general = [
@@ -35,9 +37,12 @@ class AdminPhotoController extends AbstractController
             ];
         }
 
+        $photos = $prepo->findBy(['photo_categorie' => $cat], ['position' => 'ASC']);
+
         return $this->render('admin/photos/catPhotos.html.twig', [
             'general' => $general,
-            'cat' => $cat
+            'cat' => $cat,
+            'photos' => $photos
         ]);
     }
 
@@ -146,6 +151,26 @@ class AdminPhotoController extends AbstractController
 
     }
 
+
+    /**
+     * @Route("/photo/sort", name="admin_photo_sort")
+     */
+    public function sortablePhoto(Request $request, EntityManagerInterface $em, PhotoRepository $prepo){
+
+        $photo_id = $request->request->get('photo_id');
+        $position = $request->request->get('position');
+
+        $photo = $prepo->findOneBy(['id' => $photo_id ]);
+        
+        $photo->setPosition($position);
+
+        try{
+            $em->flush();
+            return new Response(true);
+        }catch(\PdoException $e){
+
+        }
+    }
 
     public function deletePhoto(){} // TODO
 }

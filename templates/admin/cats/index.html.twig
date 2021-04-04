@@ -11,29 +11,54 @@
 <h2>Gestions des catégories</h2>
 
 {% if cats == null %}
-    <h3>Pas de catégorie</h3>
+    <h3>Pas de catégories</h3>
 {% else %}  
-
+    <section class="draggable">
     {% if 'admin/cat' in app.request.uri %}
         {% for cat in cats %}
-            <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">
-                <h3>{{ cat.titre }}
-                <a href="{{ path('admin_edit_cat', {'id':cat.id})}}"><i class="fas fa-pen-square"></i></a></h3></a>
-            <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">
-                {% if cat.photoCoverPath ==  null %}
-                    <img style="width: 100px" src="{{ asset('img/default/Default.png' ) }}" alt="{{ cat.titre }}">
-                {% else %}
-                    <img style="width: 100px" src="{{ asset('img/' ~ cat.photoCoverPath ) }}" alt="{{ cat.titre }}">
-                {% endif %}
-            </a>
-            
-
+            <article data-id="{{ cat.id }}" >
+                <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">
+                    <h3>{{ cat.titre }} ({{ cat.photos|length }})
+                    <a href="{{ path('admin_edit_cat', {'id':cat.id})}}"><i class="fas fa-pen-square"></i></a></h3></a>
+                <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">
+                    {% if cat.photoCoverPath ==  null %}
+                        <img style="width: 100px" src="{{ asset('img/default/Default.png' ) }}" alt="{{ cat.titre }}">
+                    {% else %}
+                        <img style="width: 100px" src="{{ asset('img/' ~ cat.photoCoverPath ) }}" alt="{{ cat.titre }}">
+                    {% endif %}
+                </a>
+            </article>
         {% endfor %}
-
     {% endif %}
-
+    </section>
 {% endif %}
 
     <p><a href="{{ path('admin_add_cat')}}">Ajouter une catégorie</a></p>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+<script>
+  jQuery('.draggable').sortable({
+    stop:function(event, ui){
+      let id = ui.item.attr('data-id')
+      console.log("id:"+id)
+      let position = ui.item.index()
+      console.log("pos:"+position)
+      $.post(
+        "{{ path('admin_cat_sort') }}",
+        {
+          'cat_id': id,
+          'position': position
+        },
+        function(data){
+          console.log(data)
+        }
+      )
+    }
+  })
+</script>
 
 {% endblock %}

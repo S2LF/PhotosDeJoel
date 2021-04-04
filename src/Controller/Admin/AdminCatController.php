@@ -9,6 +9,7 @@ use App\Repository\GeneralRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PhotoCategorieRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -34,7 +35,8 @@ class AdminCatController extends AbstractController
             ];
         }
 
-        $cats = $pcrepo->findAll();
+        // $cats = $pcrepo->findAll();
+        $cats = $pcrepo->findAllOrderByPos();
 
         return $this->render('admin/cats/index.html.twig', [
             'general' => $general,
@@ -91,6 +93,26 @@ class AdminCatController extends AbstractController
             'general' => $general,
             'cat' => $cat
         ]);
+    }
+
+    /**
+     * @Route("/cat/sort", name="admin_cat_sort")
+     */
+    public function sortableCat(Request $request, EntityManagerInterface $em, PhotoCategorieRepository $lrepo){
+
+        $cat_id = $request->request->get('cat_id');
+        $position = $request->request->get('position');
+
+        $cat = $lrepo->findOneBy(['id' => $cat_id ]);
+        
+        $cat->setPosition($position);
+
+        try{
+            $em->flush();
+            return new Response(true);
+        }catch(\PdoException $e){
+
+        }
     }
 
     public function deleteCat(){} // TODO

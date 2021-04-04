@@ -38,6 +38,11 @@ class Photo
      */
     private $photo_categorie;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $position;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +92,18 @@ class Photo
     public function setPhotoCategorie(?PhotoCategorie $photo_categorie): self
     {
         $this->photo_categorie = $photo_categorie;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

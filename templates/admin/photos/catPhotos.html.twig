@@ -11,10 +11,12 @@
     <h1>{{ cat.titre }}</h1>
 
 
-    {% if cat.photos | length == 0 %}
+    {% if photos | length == 0 %}
         <h2>Pas de photo dans cette catégorie</h2>        
     {% else %}
-        {% for photo in cat.photos %}
+        <section class="draggable">
+        {% for photo in photos %}
+            <article data-id="{{ photo.id }}" >
                 <figure>
                     <img style="width: 100px;" src="{{ asset('img/' ~ photo.path ) }}" alt=""> 
                     <figcaption>{{ photo.titre }} <a href="{{ path('admin_edit_photo', {'id_cat':cat.id, 'id_photo':photo.id})}}"><i class="fas fa-pen-square"></i></a></figcaption>
@@ -32,11 +34,39 @@
                         </tbody>
                     </table>
                 </details>
-
+            </article>
         {% endfor %}
+        </section>
     {% endif %}
 
     <p><a href="{{ path('admin_add_photo', {'id':cat.id}) }}">Ajouter une photo</a></p>
 
+
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+
+<script>
+  jQuery('.draggable').sortable({
+    stop:function(event, ui){
+      let id = ui.item.attr('data-id')
+      console.log("id:"+id)
+      let position = ui.item.index()
+      console.log("pos:"+position)
+      $.post(
+        "{{ path('admin_photo_sort') }}",
+        {
+          'photo_id': id,
+          'position': position
+        },
+        function(data){
+          console.log(data)
+        }
+      )
+    }
+  })
+</script>
 
 {% endblock %}
