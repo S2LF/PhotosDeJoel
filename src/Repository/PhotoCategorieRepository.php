@@ -19,7 +19,6 @@ class PhotoCategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, PhotoCategorie::class);
     }
 
-
     public function findAllOrderByPos(){
         $entityManager = $this->getEntityManager();
         $query = $entityManager ->createQuery(

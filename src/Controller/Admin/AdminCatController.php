@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Form\CatType;
 use App\Service\FileUploader;
 use App\Entity\PhotoCategorie;
+use App\Repository\PhotoRepository;
 use App\Repository\GeneralRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PhotoCategorieRepository;
@@ -22,7 +23,7 @@ class AdminCatController extends AbstractController
     /**
      * @Route("/cat", name="admin_categories")
      */
-    public function Index(GeneralRepository $grepo, PhotoCategorieRepository $pcrepo)
+    public function Index(GeneralRepository $grepo, PhotoCategorieRepository $pcrepo, PhotoRepository $prepo)
     {
         $general = $grepo->findOneBy(['id' => 1]);
         if($general == null){
@@ -40,8 +41,7 @@ class AdminCatController extends AbstractController
 
         return $this->render('admin/cats/index.html.twig', [
             'general' => $general,
-            'cats' => $cats
-
+            'cats' => $cats,
         ]);
     }
 
@@ -74,14 +74,6 @@ class AdminCatController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-
-            if($imageFile = $form->get("photo_cover_path")->getData()){
-                $newFilename = $cat->getTitre();
-                $directory = "/photo/".$cat->getTitre()."/cover";
-                $imageFileName = $fileUploader->upload($imageFile, $newFilename, $directory);
-                $cat->setPhotoCoverPath($directory."/".$imageFileName);
-            }
-
             $em->persist($cat);
             $em->flush();
             $this->addFlash("success", "La catégorie ont bien été crée/modifié");
@@ -117,4 +109,23 @@ class AdminCatController extends AbstractController
 
     public function deleteCat(){} // TODO
 
+    // /**
+    //  * @Route("/cats/sort", name="admin_cat_sort")
+    //  */
+    // public function sortableCat(Request $request, EntityManagerInterface $em, PhotoCategorieRepository $pcrepo){
+
+    //     $cat_id = $request->request->get('cat_id');
+    //     $position = $request->request->get('position');
+
+    //     $cat = $pcrepo->findOneBy(['id' => $cat_id ]);
+        
+    //     $cat->setPosition($position);
+
+    //     try{
+    //         $em->flush();
+    //         return new Response(true);
+    //     }catch(\PdoException $e){
+
+    //     }
+    // }
 }

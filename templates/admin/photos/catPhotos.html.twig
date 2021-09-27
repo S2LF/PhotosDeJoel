@@ -4,11 +4,15 @@
 
 {% block body %}
 
+
+
 {% include "admin/adminNav.html.twig" %}
 
 
 
-    <h1>{{ cat.titre }}</h1>
+    <h1 class="center">{{ cat.titre }}</h1>
+
+    <p class="center"><a href="{{ path('admin_add_photo', {'id':cat.id}) }}">Ajouter une photo</a></p>
 
 
     {% if photos | length == 0 %}
@@ -39,11 +43,10 @@
         </section>
     {% endif %}
 
-    <p><a href="{{ path('admin_add_photo', {'id':cat.id}) }}">Ajouter une photo</a></p>
+    <p class="center"><a href="{{ path('admin_add_photo', {'id':cat.id}) }}">Ajouter une photo</a></p>
 
 
 {% endblock %}
-
 
 {% block javascripts %}
 {{ parent() }}
@@ -68,5 +71,4 @@
     }
   })
 </script>
-
 {% endblock %}

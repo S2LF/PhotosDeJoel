@@ -4,9 +4,13 @@
 
 {% block body %}
 
+
+
+<h1 class="center">Espace Admin</h1>
+
 {% include "admin/adminNav.html.twig" %}
 
-<h2  class="text-center">Gestions des catégories</h2>
+<h2 class="center">Gestions des catégories</h2>
 
 {% if cats == null %}
     <h3>Pas de catégories</h3>
@@ -61,5 +65,4 @@
     }
   })
 </script>
-
 {% endblock %}

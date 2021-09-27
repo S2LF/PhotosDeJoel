@@ -12,12 +12,6 @@
 
     {{ form_row(form.titre)}}
 
-    {% if 'editCat' in app.request.uri %}
-        <h3>Photo de couverture actuelle : </h3>
-        <img style="width: 100px" src="{{ asset('img/' ~ cat.photoCoverPath ) }}" alt="{{ cat.titre }}">
-    {% endif %}
-    {{ form_row(form.photo_cover_path)}}
-
     <input type="submit" value="Valider">
 {{ form_end(form)}}
     

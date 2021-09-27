@@ -49,7 +49,7 @@ class AdminPhotoController extends AbstractController
     /**
      * @Route("/cat/{id}/addPhoto", name="admin_add_photo")
      */
-    public function addPhoto(PhotoCategorie $cat, GeneralRepository $grepo, PhotoCategorieRepository $pcrepo, Request $request, EntityManagerInterface $em){
+    public function addPhoto(PhotoCategorie $cat, GeneralRepository $grepo, PhotoCategorieRepository $pcrepo, Request $request, EntityManagerInterface $em, FileUploader $fileUploader){
         $general = $grepo->findOneBy(['id' => 1]);
         if($general == null){
             $general = [
@@ -151,7 +151,6 @@ class AdminPhotoController extends AbstractController
 
     }
 
-
     /**
      * @Route("/photo/sort", name="admin_photo_sort")
      */
@@ -171,6 +170,26 @@ class AdminPhotoController extends AbstractController
 
         }
     }
+
+    // /**
+    //  * @Route("/photo/sort", name="admin_photo_sort")
+    //  */
+    // public function sortablePhoto(Request $request, EntityManagerInterface $em, PhotoRepository $prepo){
+
+    //     $photo_id = $request->request->get('photo_id');
+    //     $position = $request->request->get('position');
+
+    //     $photo = $prepo->findOneBy(['id' => $photo_id ]);
+        
+    //     $photo->setPosition($position);
+
+    //     try{
+    //         $em->flush();
+    //         return new Response(true);
+    //     }catch(\PdoException $e){
+
+    //     }
+    // }
 
     public function deletePhoto(){} // TODO
 }
