@@ -23,20 +23,22 @@ class AdminController extends AbstractController
      */
     public function index(GeneralRepository $grepo)
     {
-        $general = $grepo->findOneBy(['id' => 1]);
-        if($general == null){
-            $general = [
-                "titreDuSiteHeader" => "Titre par défaut",
-                "texteHeader" => "Texte à écrire par défaut",
-                "motPageAccueil" => "Mot page d'accueil par défaut",
-                "photoAccueilPath" => null,
-                "textFooter" => "texte pied de page par défaut"
-            ];
-        }
+        // $general = $grepo->findOneBy(['id' => 1]);
+        // if($general == null){
+        //     $general = [
+        //         "titreDuSiteHeader" => "Titre par défaut",
+        //         "texteHeader" => "Texte à écrire par défaut",
+        //         "motPageAccueil" => "Mot page d'accueil par défaut",
+        //         "photoAccueilPath" => null,
+        //         "textFooter" => "texte pied de page par défaut"
+        //     ];
+        // }
 
-        return $this->render('admin/index.html.twig', [
-            'general' => $general,
-        ]);
+        return $this->redirectToRoute('admin_general');
+
+        // return $this->render('admin/index.html.twig', [
+        //     'general' => $general,
+        // ]);
     }
 
     /**

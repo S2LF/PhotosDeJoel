@@ -9,24 +9,28 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" />
 
+        <link rel="stylesheet" href="{{ asset('/build/app.css') }}">
         <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
 
     </head>
-    <body>
+    <body class="p-2">
 
         <header>
-            <div>
-                <img src="" alt="Logo">
-            <h1>{{ general.titreDuSiteHeader }}</h1>
-            <h2>{{ general.texteHeader|raw }}</h2>
-
+            <div class="container-fluid">
+                <div class="position-relative">
+                    <img class="position-absolute" style="left: 0;" src="{{ asset('/img/Pupille-removebg.png')}}" alt="Logo">
+                </div>
+                <div class=" p-4">
+                    <h1 class="display-4 font-weight-bold text-center">{{ general.titreDuSiteHeader }}</h1>
+                </div>
+                {{ general.texteHeader|raw }}
             </div>
-            <nav>
-                <a href="">Photos</a>
-                <a href="">Expos</a>
-                <a href="">Actualités</a>
-                <a href="">Liens</a>
-                <a href="">Contact</a>
+            <nav class="text-center mt-2">
+                <a class="m-5" href="">Photos</a>
+                <a class="m-5" href="">Expos</a>
+                <a class="m-5" href="">Actualités</a>
+                <a class="m-5" href="">Liens</a>
+                <a class="m-5" href="">Contact</a>
             </nav>
         </header>
 
@@ -44,8 +48,8 @@
         
         {% block body %}{% endblock %}
 
-        <footer>
-            <h2>{{ general.textFooter }}</h2>
+        <footer class="text-center p-5">
+            {{ general.textFooter|raw }}
         </footer>
 
         {% block javascripts %}
@@ -53,6 +57,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
 
+        <script src="{{ asset('/js/custom.js')}}"></script>
         {% endblock %}
     </body>
 </html>

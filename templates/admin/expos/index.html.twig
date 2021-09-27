@@ -6,24 +6,25 @@
 
 {% include "admin/adminNav.html.twig" %}
 
-
-<h1>Espace Admin</h1>
-<h2>Gestion des expositions</h2>
+<h2  class="text-center">Gestion des expositions</h2>
 
 {% if expos|length == 0 %}
     <p>Aucune exposition</p>
 {% else %}
     <section class="draggable">
         {% for expo in expos %}
-            <article data-id="{{ expo.id }}" >
+            <article class="m-3" data-id="{{ expo.id }}" >
+              <div class="rounded border p-2">
                 <p>{{expo.titre}} - {{expo.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_expo_edit', {'id':expo.id})}}"><i class="fas fa-pen-square"></i></a></p>
                 <p>{{ expo.contenu }}</p>
+              </div>
             </article>
         {% endfor %}
     </section>    
 {% endif %}
-
-<a href="{{ path('admin_expo_add') }}">Ajouter une actualité</a>
+<div class="text-center">
+  <a href="{{ path('admin_expo_add') }}" class="btn btn-success">Ajouter une actualité</a>
+</div>
 {% endblock %}
 
 {% block javascripts %}

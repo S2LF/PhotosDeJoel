@@ -6,17 +6,16 @@
 
 {% include "admin/adminNav.html.twig" %}
 
-
-<h1>Espace Admin</h1>
-<h2>Gestions des catégories</h2>
+<h2  class="text-center">Gestions des catégories</h2>
 
 {% if cats == null %}
     <h3>Pas de catégories</h3>
 {% else %}  
-    <section class="draggable">
+    <section class="draggable d-flex justify-content-around">
     {% if 'admin/cat' in app.request.uri %}
         {% for cat in cats %}
-            <article data-id="{{ cat.id }}" >
+            <article class="m-3" data-id="{{ cat.id }}" >
+              <div class="rounded border p-2">
                 <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">
                     <h3>{{ cat.titre }} ({{ cat.photos|length }})
                     <a href="{{ path('admin_edit_cat', {'id':cat.id})}}"><i class="fas fa-pen-square"></i></a></h3></a>
@@ -27,13 +26,15 @@
                         <img style="width: 100px" src="{{ asset('img/' ~ cat.photoCoverPath ) }}" alt="{{ cat.titre }}">
                     {% endif %}
                 </a>
+              </div>
             </article>
         {% endfor %}
     {% endif %}
     </section>
 {% endif %}
-
-    <p><a href="{{ path('admin_add_cat')}}">Ajouter une catégorie</a></p>
+  <div class="text-center">
+    <a href="{{ path('admin_add_cat')}}" class="btn btn-success">Ajouter une catégorie</a>
+  </div>
 
 {% endblock %}
 
