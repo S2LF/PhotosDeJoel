@@ -25,7 +25,7 @@ class GeneralType extends AbstractType
                 'label' => "Texte page d'accueil :"
 ])
             ->add('photo_accueil_path', FileType::class, [
-                'label' => 'Photo (JPG/PNG/GIF, max 1Mo)*',
+                'label' => 'Photo de couverture (JPG/PNG/GIF, max 1Mo)*',
 
                 // Unmapped because not associated to any entity property
                 'mapped' => false,

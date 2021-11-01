@@ -26,6 +26,11 @@ class PhotoCategorie
     private $titre;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $photoCoverPath;
+
+    /**
      * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="photo_categorie")
      */
     private $photos;
@@ -102,6 +107,18 @@ class PhotoCategorie
     public function setPosition(int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getPhotoCoverPath(): ?string
+    {
+        return $this->photoCoverPath;
+    }
+
+    public function setPhotoCoverPath(string $photoCoverPath): self
+    {
+        $this->photoCoverPath = $photoCoverPath;
 
         return $this;
     }

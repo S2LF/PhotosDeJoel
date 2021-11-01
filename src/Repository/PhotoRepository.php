@@ -30,15 +30,15 @@ class PhotoRepository extends ServiceEntityRepository
     }
 
 
-    public function findAllOrderByPos(){
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager ->createQuery(
-                    "SELECT p
-                        FROM App\Entity\Photo p
-                        ORDER BY p.position ASC"
-        );
-        return $query->execute();
-    }
+    // public function findAllOrderByPos(){
+    //     $entityManager = $this->getEntityManager();
+    //     $query = $entityManager ->createQuery(
+    //                 "SELECT p
+    //                     FROM App\Entity\Photo p
+    //                     ORDER BY p.position ASC"
+    //     );
+    //     return $query->execute();
+    // }
 
     public function getPhotoCatByPos($catId)
     {
