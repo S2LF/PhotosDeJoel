@@ -80,20 +80,15 @@ class AdminPhotoController extends AbstractController
                     $wanted = [ "Model" => "", "ExposureTime" => "", "FNumber" => "", "ISOSpeedRatings" => "", "FocalLength" => "" ];
                     $new_exif = array_intersect_key($exif, $wanted);
 
-                    
                     // CHANGE KEY
                     // $arr[$newkey] = $arr[$oldkey];
                     // unset($arr[$oldkey]);
 
-
-
                     $photo->setExifs($new_exif);
                 }
                 
-                
-                
                 $newFilename = $photo->getTitre();
-                $directory = "/photo/".$cat->getTitre()."/photo";
+                $directory = "/photo/".$cat->getId()."/photo";
                 $imageFileName = $fileUploader->upload($imageFile, $newFilename, $directory);
                 $photo->setPath($directory."/".$imageFileName);
                 $photo->setPhotoCategorie($cat);

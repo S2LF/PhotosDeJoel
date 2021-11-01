@@ -73,10 +73,25 @@ class AdminCatController extends AbstractController
 
         $form->handleRequest($request);
 
+        if($imageFile = $form->get("path")->getData()){
+            $newFilename = $cat->getTitre();
+        }
+
         if($form->isSubmitted() && $form->isValid()){
             $em->persist($cat);
             $em->flush();
-            $this->addFlash("success", "La catégorie ont bien été crée/modifié");
+
+            if($imageFile = $form->get("path")->getData()){
+                $id = $cat->getId();
+                $directory = "/photo/".$id."/cover";
+                $imageFileName = $fileUploader->upload($imageFile, $newFilename, $directory);
+                $cat->setPhotoCoverPath($directory."/".$imageFileName);
+    
+                $em->persist($cat);
+                $em->flush();
+            }
+    
+            $this->addFlash("success", "La catégorie a bien été crée/modifié");
             return $this->redirectToRoute('admin_categories');
         }
 

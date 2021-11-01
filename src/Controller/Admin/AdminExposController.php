@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Expo;
 use App\Form\ExpoType;
+use App\Service\FileUploader;
 use App\Repository\ExpoRepository;
 use App\Repository\GeneralRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -45,7 +46,7 @@ class AdminExposController extends AbstractController
      * @Route("/expos/add", name="admin_expo_add")
      * @Route("/expos/edit/{id}", name="admin_expo_edit")
      */
-    public function formCat(GeneralRepository $grepo, Expo $expo = null, Request $request, EntityManagerInterface $em){
+    public function formCat(GeneralRepository $grepo, Expo $expo = null, Request $request, EntityManagerInterface $em, FileUploader $fileUploader){
 
         $general = $grepo->findOneBy(['id' => 1]);
         if($general == null){
@@ -70,8 +71,22 @@ class AdminExposController extends AbstractController
 
             $expo->setDateCreation(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
 
+            if($imageFile = $form->get("path")->getData()){
+                $newFilename = $expo->getTitre();
+            }
+
             $em->persist($expo);
             $em->flush();
+            
+            if($imageFile = $form->get("path")->getData()){
+                $id = $expo->getId();
+                $directory = "/expo/".$id;
+                $imageFileName = $fileUploader->upload($imageFile, $newFilename, $directory);
+                $expo->setPath($directory."/".$imageFileName);
+
+                $em->persist($expo);
+                $em->flush();
+            }
             $this->addFlash("success", "L'exposition a bien été ajouté/modifié");
             return $this->redirectToRoute('admin_expos');
         }

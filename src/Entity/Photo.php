@@ -40,6 +40,7 @@ class Photo
     private $photo_categorie;
 
     /**
+     * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      */
     private $position;

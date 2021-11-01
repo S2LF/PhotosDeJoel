@@ -16,7 +16,8 @@
         integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ=="
         crossorigin="anonymous" />
 
-    <link rel="stylesheet" href="{{ asset('/build/app.css') }}">
+    <!-- <link rel="stylesheet" href="{{ asset('/build/app.css') }}"> -->
+    {{ encore_entry_link_tags('app') }}
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
 
 </head>
@@ -35,7 +36,7 @@
             {{ general.texteHeader|raw }}
         </div>
         <nav class="text-center mt-2">
-            <a class="m-5" href="">Photos</a>
+            <a class="m-5" href="{{ path('cats') }}">Photos</a>
             <a class="m-5" href="">Expos</a>
             <a class="m-5" href="">Actualités</a>
             <a class="m-5" href="">Liens</a>

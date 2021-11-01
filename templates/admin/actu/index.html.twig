@@ -8,22 +8,24 @@
 
 <h2 class="text-center">Gestion des actualités</h2>
 
-{% if actus|length == 0 %}
-    <p>Aucune actualité</p>
-{% else %}
-    <section class="draggable">
-        {% for actu in actus %}
-            <article class="m-3" data-id="{{ actu.id }}" >
-              <div class="rounded border p-2">
-                <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square"></i></a></p>
-                <p>{{ actu.contenu|raw}}</p>
-              </div>
-            </article>
-        {% endfor %}
-    </section>    
-{% endif %}
-<div class="text-center">
-  <a href="{{ path('admin_actu_add') }}" class="btn btn-success">Ajouter une actualité</a>
+<div class="container">
+  {% if actus|length == 0 %}
+      <p>Aucune actualité</p>
+  {% else %}
+      <section class="draggable">
+          {% for actu in actus %}
+              <article class="m-3" data-id="{{ actu.id }}" >
+                <div class="rounded border p-2">
+                  <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square"></i></a></p>
+                  <p>{{ actu.contenu|raw}}</p>
+                </div>
+              </article>
+          {% endfor %}
+      </section>    
+  {% endif %}
+  <div class="text-center">
+    <a href="{{ path('admin_actu_add') }}" class="btn btn-success">Ajouter une actualité</a>
+  </div>
 </div>
 {% endblock %}
 

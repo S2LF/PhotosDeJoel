@@ -49,6 +49,11 @@ class Expo
      */
     private $date_Event;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $path;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,6 +127,18 @@ class Expo
     public function setDateEvent(?\DateTimeInterface $date_Event): self
     {
         $this->date_Event = $date_Event;
+
+        return $this;
+    }
+
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    public function setPath(?string $path): self
+    {
+        $this->path = $path;
 
         return $this;
     }
