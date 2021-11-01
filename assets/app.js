@@ -11,3 +11,4 @@ import './styles/bootstrap.scss';
 
 // start the Stimulus application
 import './bootstrap';
+import './components/custom';

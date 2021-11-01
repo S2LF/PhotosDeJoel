@@ -29,6 +29,9 @@
     "doctrine/dbal": {
         "version": "2.10.2"
     },
+    "doctrine/deprecations": {
+        "version": "v0.5.3"
+    },
     "doctrine/doctrine-bundle": {
         "version": "2.0",
         "recipe": {
@@ -104,6 +107,9 @@
     },
     "imagine/imagine": {
         "version": "1.2.3"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
     },
     "liip/imagine-bundle": {
         "version": "1.8",
@@ -290,9 +296,6 @@
     "symfony/http-kernel": {
         "version": "v5.1.2"
     },
-    "symfony/inflector": {
-        "version": "v5.1.2"
-    },
     "symfony/intl": {
         "version": "v5.1.2"
     },
@@ -391,6 +394,9 @@
     },
     "symfony/polyfill-php80": {
         "version": "v1.18.0"
+    },
+    "symfony/polyfill-php81": {
+        "version": "v1.23.0"
     },
     "symfony/process": {
         "version": "v5.1.2"
