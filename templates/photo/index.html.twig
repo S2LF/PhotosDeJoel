@@ -3,9 +3,9 @@
 {% block title %}Les Photos de Joël | Catégories de photos{% endblock %}
 
 {% block body %}
-<section class="d-flex justify-content-between cat_photo">
+<section class="row justify-content-center mx-auto text-center">
     {% for cat in cats %}
-    <article>
+    <article class="m-3 col-2 rounded border">
         <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">
             <h3>{{ cat.titre }}
                 <a href="{{ path('admin_edit_cat', {'id':cat.id})}}"></a>

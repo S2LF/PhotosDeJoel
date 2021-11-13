@@ -10,7 +10,7 @@
 {% if general.photoAccueilPath == NULL %}
     <img style="width: 350px" src="{{ asset('img/default/Default.png' ) }}" alt="">
 {% else %}
-<figure class="center home">
+<figure class="text-center pt-5">
     <img src="{{ asset('img/'~ general.photoAccueilPath ) |imagine_filter('home') }}" alt="{{ general.titreDuSiteHeader }}">
 </figure>
 {% endif %}
