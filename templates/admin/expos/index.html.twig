@@ -14,16 +14,23 @@
       <section class="draggable">
           {% for expo in expos %}
               <article class="m-3" data-id="{{ expo.id }}" >
-                <div class="rounded border p-2">
-                  <p>{{expo.titre}} - {{expo.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_expo_edit', {'id':expo.id})}}"><i class="fas fa-pen-square"></i></a></p>
-                  <p>{{ expo.contenu }}</p>
+                <div class="rounded border p-2 d-flex">
+                  {% if expo.path %}                    
+                    <figure class="m-1 mr-2">
+                      <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
+                    </figure>
+                  {% endif %}
+                  <p>Titre : {{expo.titre}}  <a href="{{ path('admin_expo_edit', {'id':expo.id})}}"><i class="fas fa-pen-square"></i></a> <br>
+                    Date de l'expo : {{ expo.dateEvent |date('d/m/Y') }} <br>
+                    Date de création : {{expo.dateCreation |date('d/m/Y') }}<br>
+                    Contenu :<br>{{ expo.contenu }}</p>
                 </div>
               </article>
           {% endfor %}
       </section>    
   {% endif %}
   <div class="text-center">
-    <a href="{{ path('admin_expo_add') }}" class="btn btn-success">Ajouter une actualité</a>
+    <a href="{{ path('admin_expo_add') }}" class="btn btn-success">Ajouter une exposition</a>
   </div>
 </div>
 {% endblock %}

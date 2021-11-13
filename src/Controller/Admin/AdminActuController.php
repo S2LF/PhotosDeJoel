@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Form\ActuType;
 use App\Entity\Actualite;
+use App\Service\FileUploader;
 use App\Repository\GeneralRepository;
 use App\Repository\ActualiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -48,7 +49,7 @@ class AdminActuController extends AbstractController
      * @Route("/actu/add", name="admin_actu_add")
      * @Route("/actu/edit/{id}", name="admin_actu_edit")
      */
-    public function formCat(GeneralRepository $grepo, Actualite $actu = null, Request $request, EntityManagerInterface $em){
+    public function formCat(GeneralRepository $grepo, Actualite $actu = null, Request $request, EntityManagerInterface $em, FileUploader $fileUploader){
 
         $general = $grepo->findOneBy(['id' => 1]);
         if($general == null){
@@ -73,8 +74,23 @@ class AdminActuController extends AbstractController
 
             $actu->setDateCreation(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
 
+            if($imageFile = $form->get("path")->getData()){
+                $newFilename = $actu->getTitre();
+            }
+
             $em->persist($actu);
             $em->flush();
+
+            if($imageFile = $form->get("path")->getData()){
+                $id = $actu->getId();
+                $directory = "/actu/".$id;
+                $imageFileName = $fileUploader->upload($imageFile, $newFilename, $directory);
+                $actu->setPath($directory."/".$imageFileName);
+
+                $em->persist($actu);
+                $em->flush();
+            }
+
             $this->addFlash("success", "L'article d'actualité a bien été ajouté/modifié");
             return $this->redirectToRoute('admin_actu');
         }

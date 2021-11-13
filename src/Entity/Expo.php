@@ -24,7 +24,7 @@ class Expo
     private $titre;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lieu;
 
@@ -34,7 +34,7 @@ class Expo
     private $date_creation;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $contenu;
 

@@ -24,7 +24,8 @@ class ExpoType extends AbstractType
                 'label' => "Date de l'évènement"
             ])
             ->add('lieu', TextType::class, [
-                'label' => 'Lieu:'
+                'label' => 'Lieu:',
+                'required' => false
             ])
             ->add('path', FileType::class, [
                 'label' => 'Image de l\'expo (JPG/PNG/GIF, max 2Mo)*',
@@ -49,7 +50,8 @@ class ExpoType extends AbstractType
                 ]
             ])
             ->add('contenu', TextareaType::class, [
-                'label' => 'Description:' 
+                'label' => 'Description:',
+                'required' => false
             ])
         ;
     }

@@ -15,9 +15,16 @@
       <section class="draggable">
           {% for actu in actus %}
               <article class="m-3" data-id="{{ actu.id }}" >
-                <div class="rounded border p-2">
-                  <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square"></i></a></p>
-                  <p>{{ actu.contenu|raw}}</p>
+                <div class="rounded border p-2 d-flex">
+                  {% if actu.path %}                    
+                    <figure class="m-1 mr-2">
+                      <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
+                    </figure>
+                  {% endif %}
+                  <div>
+                    <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square"></i></a></p>
+                    <p>{{ actu.contenu|raw}}</p>
+                  </div>
                 </div>
               </article>
           {% endfor %}

@@ -21,7 +21,7 @@ class PhotoType extends AbstractType
                 'label' => 'Titre*:'
             ])
             ->add('path', FileType::class, [
-                'label' => 'Photo (JPG/PNG/GIF, max 2Mo)*',
+                'label' => 'Photo (JPG/PNG/GIF, max 2Mo)',
 
                 // Unmapped because not associated to any entity property
                 'mapped' => false,

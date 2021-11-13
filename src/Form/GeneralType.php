@@ -20,12 +20,12 @@ class GeneralType extends AbstractType
                 'label' => 'Titre du site* :'
             ])
             ->add('texte_header', CKEditorType::class, [
-                'label' => 'Texte en-tête :'])
+                'label' => 'Texte en-tête* :'])
             ->add('mot_page_accueil', CKEditorType::class, [
-                'label' => "Texte page d'accueil :"
+                'label' => "Texte page d'accueil* :"
 ])
             ->add('photo_accueil_path', FileType::class, [
-                'label' => 'Photo de couverture (JPG/PNG/GIF, max 1Mo)*',
+                'label' => 'Photo de couverture (JPG/PNG/GIF, max 1Mo)',
 
                 // Unmapped because not associated to any entity property
                 'mapped' => false,
