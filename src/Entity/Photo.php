@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PhotoRepository;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +38,12 @@ class Photo
      * @ORM\JoinColumn(nullable=false)
      */
     private $photo_categorie;
+
+    /**
+     * @Gedmo\SortablePosition
+     * @ORM\Column(type="integer")
+     */
+    private $position;
 
     public function getId(): ?int
     {
@@ -87,6 +94,18 @@ class Photo
     public function setPhotoCategorie(?PhotoCategorie $photo_categorie): self
     {
         $this->photo_categorie = $photo_categorie;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

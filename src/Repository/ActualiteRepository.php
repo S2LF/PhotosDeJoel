@@ -19,6 +19,17 @@ class ActualiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Actualite::class);
     }
 
+
+    public function findAllOrderByPos(){
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager ->createQuery(
+                    "SELECT a
+                        FROM App\Entity\Actualite a
+                        ORDER BY a.position ASC"
+        );
+        return $query->execute();
+    }
+    
     // /**
     //  * @return Actualite[] Returns an array of Actualite objects
     //  */

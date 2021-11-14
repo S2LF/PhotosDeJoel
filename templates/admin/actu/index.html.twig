@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Photos de Joël | Admin - Actualités{% endblock %}
+
+{% block body %}
+
+{% include "admin/adminNav.html.twig" %}
+
+<h2 class="text-center">Gestion des actualités</h2>
+
+<div class="container">
+  {% if actus|length == 0 %}
+      <p>Aucune actualité</p>
+  {% else %}
+      <section class="draggable">
+          {% for actu in actus %}
+              <article class="m-3" data-id="{{ actu.id }}" >
+                <div class="rounded border p-2 d-flex">
+                  {% if actu.path %}                    
+                    <figure class="m-1 mr-2">
+                      <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
+                    </figure>
+                  {% endif %}
+                  <div>
+                    <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square"></i></a></p>
+                    <p>{{ actu.contenu|raw}}</p>
+                  </div>
+                </div>
+              </article>
+          {% endfor %}
+      </section>    
+  {% endif %}
+  <div class="text-center">
+    <a href="{{ path('admin_actu_add') }}" class="btn btn-success">Ajouter une actualité</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+<script>
+  jQuery('.draggable').sortable({
+    stop:function(event, ui){
+      let id = ui.item.attr('data-id')
+      console.log("id:"+id)
+      let position = ui.item.index()
+      console.log("pos:"+position)
+      $.post(
+        "{{ path('admin_actu_sort') }}",
+        {
+          'actu_id': id,
+          'position': position
+        },
+        function(data){
+          console.log(data)
+        }
+      )
+
+    }
+    
+
+
+
+  })
+</script>
+
+{% endblock %}

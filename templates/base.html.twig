@@ -1,12 +1,72 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Les Photos de Joël{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+        integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/64cfa211f1.js" crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    {{ encore_entry_link_tags('app') }}
+    <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+
+</head>
+
+<body class="p-2">
+
+    <header>
+        <div class="container-fluid">
+            <div class="position-relative">
+                <img class="position-absolute" style="left: 0;" src="{{ asset('/img/Pupille-removebg.png')}}"
+                    alt="Logo">
+            </div>
+            <div class=" p-4">
+                <h1 class="display-4 font-weight-bold text-center">{{ general.titreDuSiteHeader }}</h1>
+            </div>
+            {{ general.texteHeader|raw }}
+        </div>
+        <nav class="text-center mt-2">
+            <a class="m-5" href="{{ path('cats') }}">Photos</a>
+            <a class="m-5" href="">Expos</a>
+            <a class="m-5" href="">Actualités</a>
+            <a class="m-5" href="">Liens</a>
+            <a class="m-5" href="">Contact</a>
+        </nav>
+    </header>
+
+    {# Flash messages #}
+    {% for message in app.flashes('success') %}
+    <div class="success">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+    <div class="error">
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% block body %}{% endblock %}
+
+    <footer class="text-center pt-5 pb-2">
+        {{ general.textFooter|raw }}
+    </footer>
+
+    {% block javascripts %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+    integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+    crossorigin="anonymous"></script>
+    {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</body>
+
 </html>

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ActualiteRepository;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +37,17 @@ class Actualite
      * @ORM\Column(type="text")
      */
     private $contenu;
+
+    /**
+     * @Gedmo\SortablePosition
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $position;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $path;
 
     public function getId(): ?int
     {
@@ -86,6 +98,30 @@ class Actualite
     public function setContenu(string $contenu): self
     {
         $this->contenu = $contenu;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    public function setPath(?string $path): self
+    {
+        $this->path = $path;
 
         return $this;
     }

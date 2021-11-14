@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Photos de Joël | Admin - Créer lien{% endblock %}
+
+{% block body %}
+
+{% include "admin/adminNav.html.twig" %}
+
+<h2 class="text-center">Gestion des liens</h2>
+<div class="container">
+  {% if liens|length == 0 %}
+      <p>Aucun lien</p>
+  {% else %}
+      <section class="draggable">
+          {% for lien in liens %}
+              <article class="m-3" data-id="{{ lien.id }}" >
+                <div class="rounded border p-2">
+                  <p>{{lien.titre}}<a href="{{ path('admin_lien_edit', {'id':lien.id})}}"><i class="fas fa-pen-square"></i></a></p>
+                  <p>{{ lien.lien }}</p>
+                </div>
+              </article>
+          {% endfor %}
+      </section>    
+  {% endif %}
+  <div class="text-center">
+    <a href="{{ path('admin_lien_add') }}" class="btn btn-success">Ajouter un lien</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+<script>
+  jQuery('.draggable').sortable({
+    stop:function(event, ui){
+      let id = ui.item.attr('data-id')
+      console.log("id:"+id)
+      let position = ui.item.index()
+      console.log("pos:"+position)
+      $.post(
+        "{{ path('admin_lien_sort') }}",
+        {
+          'lien_id': id,
+          'position': position
+        },
+        function(data){
+          console.log(data)
+        }
+      )
+
+    }
+    
+
+
+
+  })
+</script>
+
+{% endblock %}

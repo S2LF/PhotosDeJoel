@@ -19,6 +19,17 @@ class PhotoCategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, PhotoCategorie::class);
     }
 
+    public function findAllOrderByPos(){
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager ->createQuery(
+                    "SELECT pc
+                        FROM App\Entity\PhotoCategorie pc
+                        ORDER BY pc.position ASC"
+        );
+        return $query->execute();
+    }
+
+
     // /**
     //  * @return PhotoCategorie[] Returns an array of PhotoCategorie objects
     //  */
