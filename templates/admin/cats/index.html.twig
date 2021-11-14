@@ -21,9 +21,9 @@
                     <a href="{{ path('admin_edit_cat', {'id':cat.id})}}"><i class="fas fa-pen-square"></i></a></h3></a>
                 <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">
                     {% if cat.photoCoverPath ==  null %}
-                        <img style="width: 100px" src="{{ asset('img/default/Default.png' ) }}" alt="{{ cat.titre }}">
+                        <img src="{{ asset('img/default/Default.png' ) | imagine_filter('miniature') }}" alt="{{ cat.titre }}">
                     {% else %}
-                        <img style="width: 100px" src="{{ asset('img/' ~ cat.photoCoverPath ) }}" alt="{{ cat.titre }}">
+                        <img src="{{ asset('img/' ~ cat.photoCoverPath ) | imagine_filter('miniature') }}" alt="{{ cat.titre }}">
                     {% endif %}
                 </a>
               </div>

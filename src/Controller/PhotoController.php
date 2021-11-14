@@ -6,6 +6,7 @@ use App\Entity\Photo;
 use App\Form\CatType;
 use App\Form\PhotoType;
 use App\Entity\PhotoCategorie;
+use App\Repository\PhotoRepository;
 use App\Repository\GeneralRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PhotoCategorieRepository;
@@ -39,7 +40,7 @@ class PhotoController extends AbstractController
 
 
 
-        return $this->render('photo/index.html.twig', [
+        return $this->render('photos/index.html.twig', [
             'general' => $general,
             'cats' => $cats
 
@@ -47,12 +48,27 @@ class PhotoController extends AbstractController
     }
 
     /**
-     * @Route("/{cat_id}", name="photo")
+     * @Route("/{id}/photos", name="photo")
      */
-    public function photo_cat()
+    public function photo_cat(PhotoCategorie $cat, GeneralRepository $grepo, PhotoCategorieRepository $pcrepo, PhotoRepository $prepo)
     {
-        return $this->render('photo/index.html.twig', [
-            'controller_name' => 'PhotoController',
+        $general = $grepo->findOneBy(['id' => 1]);
+        if($general == null){
+            $general = [
+                "titreDuSiteHeader" => "Titre par défaut",
+                "texteHeader" => "Texte à écrire par défaut",
+                "motPageAccueil" => "Mot page d'accueil par défaut",
+                "photoAccueilPath" => null,
+                "textFooter" => "texte pied de page par défaut"
+            ];
+        }
+
+        $photos = $prepo->findBy(['photo_categorie' => $cat], ['position' => 'ASC']);
+
+        return $this->render('photos/catPhotos.html.twig', [
+            'general' => $general,
+            'cat' => $cat,
+            'photos' => $photos
         ]);
     }
 

@@ -13,12 +13,20 @@ liip_imagine:
 
     filter_sets:
 
-        home:
-            quality: 50
+        miniature:
+            quality: 25
             filters:
-                thumbnail:
-                    size: [1000, 560]
-                    mode: inset
-            # filters:
-            #     scale:
-            #         dim: [500, 300]
+                scale:
+                    dim: [280, 280]
+
+        list:
+            quality: 25
+            filters:
+                scale:
+                    dim: [225, 150]
+
+        show:
+            quality: 80
+            filters:
+                scale:
+                    dim: [1000, 1000]
