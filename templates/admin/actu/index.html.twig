@@ -10,7 +10,12 @@
 
 <div class="container">
   {% if actus|length == 0 %}
-      <p>Aucune actualité</p>
+
+      <p>
+        <h3 class="text-center">
+          Aucune actualité
+        </h3>
+      </p>
   {% else %}
       <section class="draggable">
           {% for actu in actus %}

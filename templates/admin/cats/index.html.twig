@@ -9,7 +9,9 @@
 <h2 class="text-center">Gestions des catégories</h2>
 
 {% if cats == null %}
-    <h3>Pas de catégories</h3>
+    <p>
+      <h3 class="text-center">Pas de catégories</h3>
+    </p>
 {% else %}  
     <section class="draggable row justify-content-center mx-auto text-center">
     {% if 'admin/cat' in app.request.uri %}

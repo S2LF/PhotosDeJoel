@@ -9,7 +9,11 @@
 <h2  class="text-center">Gestion des expositions</h2>
 <div class="container">
   {% if expos|length == 0 %}
-      <p>Aucune exposition</p>
+    <p>
+      <h3 class="text-center">
+        Aucune exposition
+      </h3>
+    </p>
   {% else %}
       <section class="draggable">
           {% for expo in expos %}
