@@ -30,3 +30,8 @@ liip_imagine:
             filters:
                 scale:
                     dim: [1000, 1000]
+        home:
+            quality: 100
+            filters:
+                scale:
+                    dim: [1000, 1000]
