@@ -18,16 +18,22 @@ class ExpoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Expo::class);
     }
-
+   
+    /**
+     * findAllOrderByPos
+     *
+     * @return void
+     */
     public function findAllOrderByPos(){
         $entityManager = $this->getEntityManager();
         $query = $entityManager ->createQuery(
-                    "SELECT e
-                        FROM App\Entity\Expo e
-                        ORDER BY e.position ASC"
+            "SELECT e
+                FROM App\Entity\Expo e
+                ORDER BY e.position ASC"
         );
         return $query->execute();
     }
+
     // /**
     //  * @return Expo[] Returns an array of Expo objects
     //  */

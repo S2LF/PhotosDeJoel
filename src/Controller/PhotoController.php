@@ -38,8 +38,6 @@ class PhotoController extends AbstractController
 
         $cats =  $pcrepo->findBy([], ['position' => 'ASC']);
 
-
-
         return $this->render('photos/index.html.twig', [
             'general' => $general,
             'cats' => $cats
