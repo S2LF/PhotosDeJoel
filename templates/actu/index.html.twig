@@ -1,33 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les Photos de Joël | Catégories de photos{% endblock %}
+{% block title %}Les Photos de Joël | Actualités{% endblock %}
 
 {% block body %}
 <section class="row text-center">
-    {% if expos|length == 0 %}
+    {% if actus|length == 0 %}
     <p>
         <h3 class="text-center">
-            Aucune exposition
+            Aucune actualité
         </h3>
     </p>
     {% else %}
         <section class="m-auto">
-            {% for expo in expos %}
+            {% for actu in actus %}
                 <article class="m-3">
                     <div class="p-2 d-flex">
                         <div>
-                            {% if expo.path %}                    
+                            {% if actu.path %}                    
                                 <figure class="m-1 mr-2">
-                                <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
+                                <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
                                 </figure>
                             {% endif %}
                         </div>
                         <div>
-                            <h3>{{expo.titre}}</h3> <span>{{expo.dateCreation |date('d/m/Y') }}</span>
+                            <h3>{{actu.titre}}<small> - {{actu.dateCreation |date('d/m/Y') }}</small></h3>
                             <p>
-                                Date de l'exposition : {{ expo.dateEvent |date('d/m/Y') }}
-                                <br>
-                                {{ expo.contenu | raw}}
+                                {{ actu.contenu | raw}}
                             </p>                        
                         </div>
                     </div>
