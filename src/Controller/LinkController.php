@@ -2,18 +2,18 @@
 
 namespace App\Controller;
 
-use App\Repository\ActualiteRepository;
 use App\Repository\GeneralRepository;
+use App\Repository\LienRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ActuController extends AbstractController
+class LinkController extends AbstractController
 {
     /**
-     * @Route("/actualites", name="actu")
+     * @Route("/liens", name="links")
      */
-    public function index(GeneralRepository $grepo, ActualiteRepository $acturepo): Response
+    public function index(GeneralRepository $grepo, LienRepository $lienrepo): Response
     {
         $general = $grepo->findOneBy(['id' => 1]);
         if($general == null){
@@ -26,11 +26,11 @@ class ActuController extends AbstractController
             ];
         }
 
-        $actus =  $acturepo->findBy([], ['position' => 'ASC']);
+        $links =  $lienrepo->findBy([], ['position' => 'ASC']);
 
-        return $this->render('actu/index.html.twig', [
+        return $this->render('link/index.html.twig', [
             'general' => $general,
-            'actus' => $actus
+            'links' => $links
         ]);
     }
 }

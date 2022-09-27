@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ExpoController extends AbstractController
 {
     /**
-     * @Route("/expo", name="expo")
+     * @Route("/expositions", name="expo")
      */
     public function index(GeneralRepository $grepo, ExpoRepository $exporepo): Response
     {
