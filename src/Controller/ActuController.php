@@ -8,16 +8,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ActuController extends GeneralController
 {
-    /**
-     * @Route("/actualites", name="actu")
-     */
-    public function index(ActualiteRepository $acturepo): Response
-    {
-        $actus =  $acturepo->findBy([], ['position' => 'ASC']);
+  /**
+   * @Route("/actualites", name="actu")
+   */
+  public function index(ActualiteRepository $acturepo): Response
+  {
+    $actus =  $acturepo->findBy([], ['position' => 'ASC']);
 
-        return $this->render('actu/index.html.twig', [
-            'general' => $this->general,
-            'actus' => $actus
-        ]);
-    }
+    return $this->render('actu/index.html.twig', [
+      'general' => $this->general,
+      'actus' => $actus
+    ]);
+  }
 }

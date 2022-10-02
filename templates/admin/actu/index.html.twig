@@ -11,61 +11,64 @@
 <div class="container">
   {% if actus|length == 0 %}
 
-      <p>
-        <h3 class="text-center">
-          Aucune actualité
-        </h3>
-      </p>
+  <p>
+  <h3 class="text-center">
+    Aucune actualité
+  </h3>
+  </p>
   {% else %}
-      <section class="draggable">
-          {% for actu in actus %}
-          {% if actu.path is null %}
-          <article class="row text-center justify-content-center m-3" data-id="{{ actu.id }}" >
-            <div class="rounded border p-2 d-flex flex-column">
-              {% if actu.path %}                    
-                <figure class="m-1 mr-2 align-self-center">
-                  <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
-                </figure>
-              {% endif %}
-              <div>
-                <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square"></i></a></p>
-                <p>{{ actu.contenu|raw}}</p>
-              </div>
-            </div>
-          </article>
-          {% else %}
-              {% if loop.index is odd %}
-              <article class="row text-center justify-content-center m-3" data-id="{{ actu.id }}" >
-                <div class="rounded border p-2 d-flex">
-                  {% if actu.path %}                    
-                    <figure class="m-1 mr-2 align-self-center">
-                      <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
-                    </figure>
-                  {% endif %}
-                  <div>
-                    <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square"></i></a></p>
-                    <p>{{ actu.contenu|raw}}</p>
-                  </div>
-                </div>
-              </article>
-              {% else %}
-              <article class="row text-center justify-content-center m-3" data-id="{{ actu.id }}" >
-                <div class="rounded border p-2 d-flex flex-row-reverse">
-                  {% if actu.path %}                    
-                    <figure class="m-1 mr-2 align-self-center">
-                      <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
-                    </figure>
-                  {% endif %}
-                  <div>
-                    <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }} <a href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square"></i></a></p>
-                    <p>{{ actu.contenu|raw}}</p>
-                  </div>
-                </div>
-              </article>
-              {% endif %}
-              {% endif %}
-          {% endfor %}
-      </section>    
+  <section class="draggable">
+    {% for actu in actus %}
+    {% if actu.path is null %}
+    <article class="row text-center justify-content-center m-3" data-id="{{ actu.id }}">
+      <div class="rounded border p-2 d-flex flex-column">
+        {% if actu.path %}
+        <figure class="m-1 mr-2 align-self-center">
+          <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
+        </figure>
+        {% endif %}
+        <div>
+          <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }} <a
+              href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square"></i></a></p>
+          <p>{{ actu.contenu|raw}}</p>
+        </div>
+      </div>
+    </article>
+    {% else %}
+    {% if loop.index is odd %}
+    <article class="row text-center justify-content-center m-3" data-id="{{ actu.id }}">
+      <div class="rounded border p-2 d-flex">
+        {% if actu.path %}
+        <figure class="m-1 mr-2 align-self-center">
+          <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
+        </figure>
+        {% endif %}
+        <div>
+          <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }} <a
+              href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square"></i></a></p>
+          <p>{{ actu.contenu|raw}}</p>
+        </div>
+      </div>
+    </article>
+    {% else %}
+    <article class="row text-center justify-content-center m-3" data-id="{{ actu.id }}">
+      <div class="rounded border p-2 d-flex flex-row-reverse">
+        {% if actu.path %}
+        <figure class="m-1 mr-2 align-self-center">
+          <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
+        </figure>
+        {% endif %}
+        <div>
+          <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }} <a
+              href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square"></i></a></p>
+          <p>{{ actu.contenu|raw}}</p>
+        </div>
+      </div>
+    </article>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+  </section>
   {% endif %}
   <div class="text-center">
     <a href="{{ path('admin_actu_add') }}" class="btn btn-success">Ajouter une actualité</a>
@@ -78,24 +81,24 @@
 
 <script>
   jQuery('.draggable').sortable({
-    stop:function(event, ui){
+    stop: function (event, ui) {
       let id = ui.item.attr('data-id')
-      console.log("id:"+id)
+      console.log("id:" + id)
       let position = ui.item.index()
-      console.log("pos:"+position)
+      console.log("pos:" + position)
       $.post(
         "{{ path('admin_actu_sort') }}",
         {
           'actu_id': id,
           'position': position
         },
-        function(data){
+        function (data) {
           console.log(data)
         }
       )
 
     }
-    
+
 
 
 

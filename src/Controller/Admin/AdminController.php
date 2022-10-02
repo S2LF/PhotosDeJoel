@@ -17,45 +17,46 @@ use Flasher\Prime\FlasherInterface;
  */
 class AdminController extends GeneralController
 {
-    /**
-     * @Route("/", name="admin")
-     */
-    public function index()
-    {
-        return $this->redirectToRoute('admin_general');
+  /**
+   * @Route("/", name="admin")
+   */
+  public function index()
+  {
+    return $this->redirectToRoute('admin_general');
+  }
+
+  /**
+   * @Route("/general", name="admin_general")
+   */
+  public function general(Request $request, EntityManagerInterface $em, GeneralRepository $grepo, FileUploader $fileUploader)
+  {
+    $generalForm = $grepo->findOneBy(['id' => 1]);
+    if (!$generalForm) {
+      $generalForm = new General;
     }
 
-    /**
-     * @Route("/general", name="admin_general")
-     */
-    public function general(Request $request, EntityManagerInterface $em, GeneralRepository $grepo, FileUploader $fileUploader){
-        $generalForm = $grepo->findOneBy(['id' => 1]);
-        if(!$generalForm){
-            $generalForm = new General;
-        }
+    $form = $this->createForm(GeneralType::class, $generalForm);
 
-        $form = $this->createForm(GeneralType::class, $generalForm);
+    $form->handleRequest($request);
 
-        $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
 
-        if($form->isSubmitted() && $form->isValid()){
+      if ($imageFile = $form->get("photo_accueil_path")->getData()) {
+        $newFilename = "home";
+        $directory = "general";
+        $imageFileName = $fileUploader->upload($imageFile, $newFilename, $directory);
+        $generalForm->setPhotoAccueilPath($directory . "/" . $imageFileName);
+      }
 
-            if($imageFile = $form->get("photo_accueil_path")->getData()){
-                $newFilename = "home";
-                $directory = "general";
-                $imageFileName = $fileUploader->upload($imageFile, $newFilename, $directory);
-                $generalForm->setPhotoAccueilPath($directory."/".$imageFileName);
-            }
-
-            $em->persist($generalForm);
-            $em->flush();
-            $this->addFlash("success", "Les informations ont bien été modifiés");
-            return $this->redirectToRoute('admin');
-        }
-
-        return $this->render('admin/general.html.twig', [
-            'general' => $this->general,
-            "form" => $form->createView()
-        ]);
+      $em->persist($generalForm);
+      $em->flush();
+      $this->addFlash("success", "Les informations ont bien été modifiés");
+      return $this->redirectToRoute('admin');
     }
+
+    return $this->render('admin/general.html.twig', [
+      'general' => $this->general,
+      "form" => $form->createView()
+    ]);
+  }
 }

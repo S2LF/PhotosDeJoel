@@ -8,16 +8,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ExpoController extends GeneralController
 {
-    /**
-     * @Route("/expositions", name="expo")
-     */
-    public function index(ExpoRepository $exporepo): Response
-    {
-        $expos =  $exporepo->findBy([], ['position' => 'ASC']);
+  /**
+   * @Route("/expositions", name="expo")
+   */
+  public function index(ExpoRepository $exporepo): Response
+  {
+    $expos =  $exporepo->findBy([], ['position' => 'ASC']);
 
-        return $this->render('expo/index.html.twig', [
-            'general' => $this->general,
-            'expos' => $expos
-        ]);
-    }
+    return $this->render('expo/index.html.twig', [
+      'general' => $this->general,
+      'expos' => $expos
+    ]);
+  }
 }

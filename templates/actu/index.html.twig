@@ -6,75 +6,75 @@
 <h1 class="text-center">Actualités</h1>
 
 <section class="row text-center">
-    {% if actus|length == 0 %}
-    <p>
-        <h3 class="text-center">
-            Aucune actualité
-        </h3>
-    </p>
+  {% if actus|length == 0 %}
+  <p>
+  <h3 class="text-center">
+    Aucune actualité
+  </h3>
+  </p>
+  {% else %}
+  <section class="m-auto">
+    {% for actu in actus %}
+    {% if actu.path is null %}
+    <article class="m-3">
+      <div class="p-2 d-flex flex-column">
+        <div>
+          {% if actu.path %}
+          <figure class="m-1 mr-2">
+            <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
+          </figure>
+          {% endif %}
+        </div>
+        <div>
+          <h3>{{actu.titre}}<small> - {{actu.dateCreation |date('d/m/Y') }}</small></h3>
+          <p>
+            {{ actu.contenu | raw}}
+          </p>
+        </div>
+      </div>
+    </article>
     {% else %}
-        <section class="m-auto">
-            {% for actu in actus %}
-                {% if actu.path is null %}
-                <article class="m-3">
-                    <div class="p-2 d-flex flex-column">
-                        <div>
-                            {% if actu.path %}                    
-                                <figure class="m-1 mr-2">
-                                <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
-                                </figure>
-                            {% endif %}
-                        </div>
-                        <div>
-                            <h3>{{actu.titre}}<small> - {{actu.dateCreation |date('d/m/Y') }}</small></h3>
-                            <p>
-                                {{ actu.contenu | raw}}
-                            </p>                        
-                        </div>
-                    </div>
-                </article>
-                {% else %}
-                    {% if loop.index is odd %}
-                    <article class="m-3">
-                        <div class="p-2 d-flex">
-                            <div>
-                                {% if actu.path %}                    
-                                    <figure class="m-1 mr-2">
-                                    <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
-                                    </figure>
-                                {% endif %}
-                            </div>
-                            <div>
-                                <h3>{{actu.titre}}<small> - {{actu.dateCreation |date('d/m/Y') }}</small></h3>
-                                <p>
-                                    {{ actu.contenu | raw}}
-                                </p>                        
-                            </div>
-                        </div>
-                    </article>
-                    {% else %}
-                    <article class="m-3">
-                        <div class="p-2 d-flex flex-row-reverse">
-                            <div>
-                                {% if actu.path %}                    
-                                    <figure class="m-1 mr-2">
-                                    <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
-                                    </figure>
-                                {% endif %}
-                            </div>
-                            <div>
-                                <h3>{{actu.titre}}<small> - {{actu.dateCreation |date('d/m/Y') }}</small></h3>
-                                <p>
-                                    {{ actu.contenu | raw}}
-                                </p>                        
-                            </div>
-                        </div>
-                    </article>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-        </section>    
+    {% if loop.index is odd %}
+    <article class="m-3">
+      <div class="p-2 d-flex">
+        <div>
+          {% if actu.path %}
+          <figure class="m-1 mr-2">
+            <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
+          </figure>
+          {% endif %}
+        </div>
+        <div>
+          <h3>{{actu.titre}}<small> - {{actu.dateCreation |date('d/m/Y') }}</small></h3>
+          <p>
+            {{ actu.contenu | raw}}
+          </p>
+        </div>
+      </div>
+    </article>
+    {% else %}
+    <article class="m-3">
+      <div class="p-2 d-flex flex-row-reverse">
+        <div>
+          {% if actu.path %}
+          <figure class="m-1 mr-2">
+            <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
+          </figure>
+          {% endif %}
+        </div>
+        <div>
+          <h3>{{actu.titre}}<small> - {{actu.dateCreation |date('d/m/Y') }}</small></h3>
+          <p>
+            {{ actu.contenu | raw}}
+          </p>
+        </div>
+      </div>
+    </article>
     {% endif %}
+    {% endif %}
+    {% endfor %}
+  </section>
+  {% endif %}
 </section>
 
 {% endblock %}

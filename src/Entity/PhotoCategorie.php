@@ -13,113 +13,108 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PhotoCategorie
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+  /**
+   * @ORM\Id()
+   * @ORM\GeneratedValue()
+   * @ORM\Column(type="integer")
+   */
+  private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $titre;
+  /**
+   * @ORM\Column(type="string", length=255)
+   */
+  private $titre;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $photoCoverPath;
+  /**
+   * @ORM\Column(type="string", length=255)
+   */
+  private $photoCoverPath;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="photo_categorie")
-     */
-    private $photos;
+  /**
+   * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="photo_categorie")
+   */
+  private $photos;
 
-    /**
-     * @Gedmo\SortablePosition
-     * @ORM\Column(type="integer")
-     */
-    private $position;
+  /**
+   * @Gedmo\SortablePosition
+   * @ORM\Column(type="integer")
+   */
+  private $position;
 
-    // /**
-    //  * @ORM\Column(type="integer")
-    //  */
-    // private $position;
+  public function __construct()
+  {
+    $this->photos = new ArrayCollection();
+  }
 
-    public function __construct()
-    {
-        $this->photos = new ArrayCollection();
+  public function getId(): ?int
+  {
+    return $this->id;
+  }
+
+  public function getTitre(): ?string
+  {
+    return $this->titre;
+  }
+
+  public function setTitre(string $titre): self
+  {
+    $this->titre = $titre;
+
+    return $this;
+  }
+
+  /**
+   * @return Collection|Photo[]
+   */
+  public function getPhotos(): Collection
+  {
+    return $this->photos;
+  }
+
+  public function addPhoto(Photo $photo): self
+  {
+    if (!$this->photos->contains($photo)) {
+      $this->photos[] = $photo;
+      $photo->setPhotoCategorie($this);
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
+    return $this;
+  }
+
+  public function removePhoto(Photo $photo): self
+  {
+    if ($this->photos->contains($photo)) {
+      $this->photos->removeElement($photo);
+      // set the owning side to null (unless already changed)
+      if ($photo->getPhotoCategorie() === $this) {
+        $photo->setPhotoCategorie(null);
+      }
     }
 
-    public function getTitre(): ?string
-    {
-        return $this->titre;
-    }
+    return $this;
+  }
 
-    public function setTitre(string $titre): self
-    {
-        $this->titre = $titre;
+  public function getPosition(): ?int
+  {
+    return $this->position;
+  }
 
-        return $this;
-    }
+  public function setPosition(int $position): self
+  {
+    $this->position = $position;
 
-    /**
-     * @return Collection|Photo[]
-     */
-    public function getPhotos(): Collection
-    {
-        return $this->photos;
-    }
+    return $this;
+  }
 
-    public function addPhoto(Photo $photo): self
-    {
-        if (!$this->photos->contains($photo)) {
-            $this->photos[] = $photo;
-            $photo->setPhotoCategorie($this);
-        }
+  public function getPhotoCoverPath(): ?string
+  {
+    return $this->photoCoverPath;
+  }
 
-        return $this;
-    }
+  public function setPhotoCoverPath(string $photoCoverPath): self
+  {
+    $this->photoCoverPath = $photoCoverPath;
 
-    public function removePhoto(Photo $photo): self
-    {
-        if ($this->photos->contains($photo)) {
-            $this->photos->removeElement($photo);
-            // set the owning side to null (unless already changed)
-            if ($photo->getPhotoCategorie() === $this) {
-                $photo->setPhotoCategorie(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    public function setPosition(int $position): self
-    {
-        $this->position = $position;
-
-        return $this;
-    }
-
-    public function getPhotoCoverPath(): ?string
-    {
-        return $this->photoCoverPath;
-    }
-
-    public function setPhotoCoverPath(string $photoCoverPath): self
-    {
-        $this->photoCoverPath = $photoCoverPath;
-
-        return $this;
-    }
+    return $this;
+  }
 }

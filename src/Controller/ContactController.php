@@ -15,60 +15,60 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ContactController extends GeneralController
 {
-    /**
-     * @Route("/contact", name="contact")
-     */
-    public function index(Request $request, MailerInterface $mailer): Response
-    {
-        $contactForm = $this->createFormBuilder()
-            ->add('name', TextType::class, [
-                'label' => 'Votre nom',
-                'attr' => [
-                    'maxlength' => 30
-                ],
-            ])
-            ->add('email', EmailType::class, [
-                'label' => 'Votre e-mail',
-                'attr' => [
-                    'pattern' => '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$', 
-                    'match' => false, 
-                    'message' => 'E-mail incomplet blablabla',
-                    'placeholder' => 'email@domaine.fr'
-                ]
-            ])
-            ->add('subject', TextType::class, [
-                'label' => 'Sujet',
-                'attr' => [
-                    'maxlength' => 30
-                ]
-            ])
-            ->add('content', TextareaType::class, [
-                'label' => 'Votre message'
-            ])
-            ->add('rgpd', CheckboxType::class, [
-                'label' => 'En cochant cette case et en soumettant ce formulaire, j’accepte que mes données personnelles soient utilisées pour me recontacter dans le cadre de ma demande. Aucun autre traitement ne sera effectué avec mes informations.'
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer'
-            ])
-            ->getForm();
+  /**
+   * @Route("/contact", name="contact")
+   */
+  public function index(Request $request, MailerInterface $mailer): Response
+  {
+    $contactForm = $this->createFormBuilder()
+      ->add('name', TextType::class, [
+        'label' => 'Votre nom',
+        'attr' => [
+          'maxlength' => 30
+        ],
+      ])
+      ->add('email', EmailType::class, [
+        'label' => 'Votre e-mail',
+        'attr' => [
+          'pattern' => '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$',
+          'match' => false,
+          'message' => 'E-mail incomplet blablabla',
+          'placeholder' => 'email@domaine.fr'
+        ]
+      ])
+      ->add('subject', TextType::class, [
+        'label' => 'Sujet',
+        'attr' => [
+          'maxlength' => 30
+        ]
+      ])
+      ->add('content', TextareaType::class, [
+        'label' => 'Votre message'
+      ])
+      ->add('rgpd', CheckboxType::class, [
+        'label' => 'En cochant cette case et en soumettant ce formulaire, j’accepte que mes données personnelles soient utilisées pour me recontacter dans le cadre de ma demande. Aucun autre traitement ne sera effectué avec mes informations.'
+      ])
+      ->add('submit', SubmitType::class, [
+        'label' => 'Envoyer'
+      ])
+      ->getForm();
 
 
-        $contactForm->handleRequest($request);
-        if ($contactForm->isSubmitted() && $contactForm->isValid()) {
-            $data = $contactForm->getData();
+    $contactForm->handleRequest($request);
+    if ($contactForm->isSubmitted() && $contactForm->isValid()) {
+      $data = $contactForm->getData();
 
-            $template = '
+      $template = '
             <p>
-                <b>Objet :</b> '. $data['subject'] .'
+                <b>Objet :</b> ' . $data['subject'] . '
             </p>
             <p>
-                <b>Nom :</b> '. $data['name'] .'<br>
-                <b>Email :</b> <a href="mailto:'. $data['email'].'">'. $data['email'] .'</a>
+                <b>Nom :</b> ' . $data['name'] . '<br>
+                <b>Email :</b> <a href="mailto:' . $data['email'] . '">' . $data['email'] . '</a>
             </p>
             <p>
                 <b>Message :</b><br>
-                '. $data['content'] .'
+                ' . $data['content'] . '
             </p>
             <hr>
             <p>
@@ -76,20 +76,20 @@ class ContactController extends GeneralController
             </p>
             ';
 
-            $email = (new Email())
-            ->from('no-reply@photodejoel.fr')
-            ->to('joel.allain@gmx.fr')
-            ->subject('Formulaire de contact: '. $data['subject'])
-            ->html($template);
+      $email = (new Email())
+        ->from('no-reply@photodejoel.fr')
+        ->to('joel.allain@gmx.fr')
+        ->subject('Formulaire de contact: ' . $data['subject'])
+        ->html($template);
 
-            $mailer->send($email);
+      $mailer->send($email);
 
-            return $this->redirectToRoute('contact');
-        }
-
-        return $this->render('contact/index.html.twig', [
-            'general' => $this->general,
-            'contactForm' => $contactForm->createView()
-        ]);
+      return $this->redirectToRoute('contact');
     }
+
+    return $this->render('contact/index.html.twig', [
+      'general' => $this->general,
+      'contactForm' => $contactForm->createView()
+    ]);
+  }
 }
