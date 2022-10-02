@@ -136,6 +136,12 @@
     "php": {
         "version": "7.2"
     },
+    "php-flasher/flasher": {
+        "version": "v1.7.0"
+    },
+    "php-flasher/flasher-symfony": {
+        "version": "v1.7.0"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },
