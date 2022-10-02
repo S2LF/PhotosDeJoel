@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\GeneralRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -15,24 +13,13 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ContactController extends AbstractController
+class ContactController extends GeneralController
 {
     /**
      * @Route("/contact", name="contact")
      */
-    public function index(GeneralRepository $grepo, Request $request, MailerInterface $mailer): Response
+    public function index(Request $request, MailerInterface $mailer): Response
     {
-        $general = $grepo->findOneBy(['id' => 1]);
-        if($general == null){
-            $general = [
-                "titreDuSiteHeader" => "Titre par défaut",
-                "texteHeader" => "Texte à écrire par défaut",
-                "motPageAccueil" => "Mot page d'accueil par défaut",
-                "photoAccueilPath" => null,
-                "textFooter" => "texte pied de page par défaut"
-            ];
-        }
-
         $contactForm = $this->createFormBuilder()
             ->add('name', TextType::class, [
                 'label' => 'Votre nom',
@@ -101,7 +88,7 @@ class ContactController extends AbstractController
         }
 
         return $this->render('contact/index.html.twig', [
-            'general' => $general,
+            'general' => $this->general,
             'contactForm' => $contactForm->createView()
         ]);
     }
