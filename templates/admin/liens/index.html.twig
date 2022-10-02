@@ -15,14 +15,17 @@
       </h3>
     </p>
   {% else %}
-      <section class="draggable">
+      <section class="draggable m-auto">
           {% for lien in liens %}
-              <article class="m-3" data-id="{{ lien.id }}" >
-                <div class="rounded border p-2">
-                  <p>{{lien.titre}}<a href="{{ path('admin_lien_edit', {'id':lien.id})}}"><i class="fas fa-pen-square"></i></a></p>
-                  <p>{{ lien.lien }}</p>
+            <article class="m-3" data-id="{{ lien.id }}" >
+              <div class="rounded border p-2 d-flex">
+                <div class="d-flex align-items-center">
+                  <h3>{{lien.titre}}&nbsp;&nbsp;<a href="{{ path('admin_lien_edit', {'id':lien.id})}}"><i class="fas fa-pen-square"></i></a>
+                    <small>&nbsp;-&nbsp;<a href="{{ lien.lien | raw}}" target="_blank">{{ lien.lien }}</a></small>
+                  </h3>
                 </div>
-              </article>
+              </div>
+            </article>
           {% endfor %}
       </section>    
   {% endif %}
@@ -52,12 +55,7 @@
           console.log(data)
         }
       )
-
     }
-    
-
-
-
   })
 </script>
 

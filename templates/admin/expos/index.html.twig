@@ -17,8 +17,9 @@
   {% else %}
       <section class="draggable">
           {% for expo in expos %}
-              <article class="m-3" data-id="{{ expo.id }}" >
-                <div class="rounded border p-2 d-flex">
+            {% if expo.path is null %}
+              <article class="row text-center justify-content-center m-3" data-id="{{ expo.id }}" >
+                <div class="rounded border p-2 d-flex flex-column">
                   {% if expo.path %}                    
                     <figure class="m-1 mr-2 align-self-center">
                       <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
@@ -30,6 +31,38 @@
                     Contenu :<br>{{ expo.contenu }}</p>
                 </div>
               </article>
+            {% else %}
+              {% if loop.index is odd %}
+                <article class="row text-center justify-content-center m-3" data-id="{{ expo.id }}" >
+                  <div class="rounded border p-2 d-flex">
+                    {% if expo.path %}                    
+                      <figure class="m-1 mr-2 align-self-center">
+                        <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
+                      </figure>
+                    {% endif %}
+                    <p>Titre : {{expo.titre}}  <a href="{{ path('admin_expo_edit', {'id':expo.id})}}"><i class="fas fa-pen-square"></i></a> <br>
+                      Date de l'expo : {{ expo.dateEvent |date('d/m/Y') }} <br>
+                      Date de création : {{expo.dateCreation |date('d/m/Y') }}<br>
+                      Contenu :<br>{{ expo.contenu }}</p>
+                  </div>
+                </article>
+              {% else %}
+                <article class="row text-center justify-content-center m-3" data-id="{{ expo.id }}" >
+                  <div class="rounded border p-2 d-flex flex-row-reverse">
+                    {% if expo.path %}                    
+                      <figure class="m-1 mr-2 align-self-center">
+                        <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
+                      </figure>
+                    {% endif %}
+                    <p>Titre : {{expo.titre}}  <a href="{{ path('admin_expo_edit', {'id':expo.id})}}"><i class="fas fa-pen-square"></i></a> <br>
+                      Date de l'expo : {{ expo.dateEvent |date('d/m/Y') }} <br>
+                      Date de création : {{expo.dateCreation |date('d/m/Y') }}<br>
+                      Contenu :<br>{{ expo.contenu }}</p>
+                  </div>
+                </article>
+              
+            {% endif %}
+              
           {% endfor %}
       </section>    
   {% endif %}

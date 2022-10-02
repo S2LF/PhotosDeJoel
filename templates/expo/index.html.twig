@@ -15,25 +15,69 @@
     {% else %}
         <section class="m-auto">
             {% for expo in expos %}
-                <article class="m-3">
-                    <div class="p-2 d-flex">
-                        <div>
-                            {% if expo.path %}                    
-                                <figure class="m-1 mr-2">
-                                <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
-                                </figure>
-                            {% endif %}
+                {% if expo.path is null %}
+                    <article class="m-3">
+                        <div class="p-2 d-flex flex-column">
+                            <div>
+                                {% if expo.path %}                    
+                                    <figure class="m-1 mr-2">
+                                    <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
+                                    </figure>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <h3>{{expo.titre}}</h3> <span>{{expo.dateCreation |date('d/m/Y') }}</span>
+                                <p>
+                                    Date de l'exposition : {{ expo.dateEvent |date('d/m/Y') }}
+                                    <br>
+                                    {{ expo.contenu | raw}}
+                                </p>                        
+                            </div>
                         </div>
-                        <div>
-                            <h3>{{expo.titre}}</h3> <span>{{expo.dateCreation |date('d/m/Y') }}</span>
-                            <p>
-                                Date de l'exposition : {{ expo.dateEvent |date('d/m/Y') }}
-                                <br>
-                                {{ expo.contenu | raw}}
-                            </p>                        
-                        </div>
-                    </div>
-                </article>
+                    </article>
+                {% else %}
+                    {% if loop.index is odd %}
+                        <article class="m-3">
+                            <div class="p-2 d-flex">
+                                <div>
+                                    {% if expo.path %}                    
+                                        <figure class="m-1 mr-2">
+                                        <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
+                                        </figure>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <h3>{{expo.titre}}</h3> <span>{{expo.dateCreation |date('d/m/Y') }}</span>
+                                    <p>
+                                        Date de l'exposition : {{ expo.dateEvent |date('d/m/Y') }}
+                                        <br>
+                                        {{ expo.contenu | raw}}
+                                    </p>                        
+                                </div>
+                            </div>
+                        </article>
+                    {% else %}
+                        <article class="m-3">
+                            <div class="p-2 d-flex flex-row-reverse">
+                                <div>
+                                    {% if expo.path %}                    
+                                        <figure class="m-1 mr-2">
+                                        <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
+                                        </figure>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <h3>{{expo.titre}}</h3> <span>{{expo.dateCreation |date('d/m/Y') }}</span>
+                                    <p>
+                                        Date de l'exposition : {{ expo.dateEvent |date('d/m/Y') }}
+                                        <br>
+                                        {{ expo.contenu | raw}}
+                                    </p>                        
+                                </div>
+                            </div>
+                        </article>
+                    {% endif %}
+                {% endif %}
             {% endfor %}
         </section>    
     {% endif %}

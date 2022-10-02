@@ -18,9 +18,11 @@
                     <div class="p-2 d-flex">
                         <div class="d-flex align-items-center">
                             <h3>{{links.titre}}</h3>&nbsp;-&nbsp;
-                            <a href="{{ links.lien | raw}}" target="_blank">
-                                Voir le site
-                            </a>                        
+                                <a href="{{ links.lien | raw}}" target="_blank">
+                                    {{ links.lien }}
+                                </a>
+                            </h3>
+                        </div>
                         </div>
                     </div>
                 </article>
