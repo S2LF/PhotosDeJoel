@@ -2,12 +2,14 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\GeneralController;
 use App\Form\ActuType;
 use App\Entity\Actualite;
 use App\Service\FileUploader;
 use App\Repository\GeneralRepository;
 use App\Repository\ActualiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Error;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,31 +18,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * @Route("/admin")
  */
-class AdminActuController extends AbstractController
+class AdminActuController extends GeneralController
 {
     /**
      * @Route("/actu", name="admin_actu")
      */
-    public function index(GeneralRepository $grepo, ActualiteRepository $arepo)
+    public function index(ActualiteRepository $arepo)
     {
-
-        $general = $grepo->findOneBy(['id' => 1]);
-        if($general == null){
-            $general = [
-                "titreDuSiteHeader" => "Titre par défaut",
-                "texteHeader" => "Texte à écrire par défaut",
-                "motPageAccueil" => "Mot page d'accueil par défaut",
-                "photoAccueilPath" => null,
-                "textFooter" => "texte pied de page par défaut"
-            ];
-        }
-
         // $actus = $arepo->findAll();
         $actus = $arepo->findAllOrderByPos();
 
 
         return $this->render('admin/actu/index.html.twig', [
-            'general' => $general,
+            'general' => $this->general,
             'actus' => $actus
         ]);
     }
@@ -49,19 +39,7 @@ class AdminActuController extends AbstractController
      * @Route("/actu/add", name="admin_actu_add")
      * @Route("/actu/edit/{id}", name="admin_actu_edit")
      */
-    public function formCat(GeneralRepository $grepo, Actualite $actu = null, Request $request, EntityManagerInterface $em, FileUploader $fileUploader){
-
-        $general = $grepo->findOneBy(['id' => 1]);
-        if($general == null){
-            $general = [
-                "titreDuSiteHeader" => "Titre par défaut",
-                "texteHeader" => "Texte à écrire par défaut",
-                "motPageAccueil" => "Mot page d'accueil par défaut",
-                "photoAccueilPath" => null,
-                "textFooter" => "texte pied de page par défaut"
-            ];
-        }
-
+    public function formCat(Actualite $actu = null, Request $request, EntityManagerInterface $em, FileUploader $fileUploader){
         if(!$actu){
         $actu = new Actualite;           
         }
@@ -97,7 +75,7 @@ class AdminActuController extends AbstractController
 
     return $this->render('admin/actu/addActu.html.twig', [
             'form' => $form->createView(),
-            'general' => $general,
+            'general' => $this->general,
         ]);
 
     }
@@ -118,8 +96,7 @@ class AdminActuController extends AbstractController
             $em->flush();
             return new Response(true);
         }catch(\PdoException $e){
-
+            throw new Error($e);
         }
     }
-
 }

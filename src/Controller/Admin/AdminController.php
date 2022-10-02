@@ -2,8 +2,7 @@
 
 namespace App\Controller\Admin;
 
-
-
+use App\Controller\GeneralController;
 use App\Entity\General;
 use App\Form\GeneralType;
 use App\Service\FileUploader;
@@ -11,57 +10,30 @@ use App\Repository\GeneralRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Flasher\Prime\FlasherInterface;
 
-    /**
-     * @Route("/admin")
-     */
-class AdminController extends AbstractController
+/**
+ * @Route("/admin")
+ */
+class AdminController extends GeneralController
 {
     /**
      * @Route("/", name="admin")
      */
-    public function index(GeneralRepository $grepo)
+    public function index()
     {
-        // $general = $grepo->findOneBy(['id' => 1]);
-        // if($general == null){
-        //     $general = [
-        //         "titreDuSiteHeader" => "Titre par défaut",
-        //         "texteHeader" => "Texte à écrire par défaut",
-        //         "motPageAccueil" => "Mot page d'accueil par défaut",
-        //         "photoAccueilPath" => null,
-        //         "textFooter" => "texte pied de page par défaut"
-        //     ];
-        // }
-
         return $this->redirectToRoute('admin_general');
-
-        // return $this->render('admin/index.html.twig', [
-        //     'general' => $general,
-        // ]);
     }
 
     /**
      * @Route("/general", name="admin_general")
      */
     public function general(Request $request, EntityManagerInterface $em, GeneralRepository $grepo, FileUploader $fileUploader){
-
-        $general = $grepo->findOneBy(['id' => 1]);
-        if($general == null){
-            $general = [
-                "titreDuSiteHeader" => "Titre par défaut",
-                "texteHeader" => "Texte à écrire par défaut",
-                "motPageAccueil" => "Mot page d'accueil par défaut",
-                "photoAccueilPath" => null,
-                "textFooter" => "texte pied de page par défaut"
-            ];
-        }
-
         $generalForm = $grepo->findOneBy(['id' => 1]);
         if(!$generalForm){
             $generalForm = new General;
         }
-        
+
         $form = $this->createForm(GeneralType::class, $generalForm);
 
         $form->handleRequest($request);
@@ -82,12 +54,8 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/general.html.twig', [
-            'general' => $general,
+            'general' => $this->general,
             "form" => $form->createView()
         ]);
-
     }
-
-        
-
 }

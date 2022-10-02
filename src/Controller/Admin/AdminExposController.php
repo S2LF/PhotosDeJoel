@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\GeneralController;
 use App\Entity\Expo;
 use App\Form\ExpoType;
 use App\Service\FileUploader;
@@ -16,28 +17,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * @Route("/admin")
  */
-class AdminExposController extends AbstractController
+class AdminExposController extends GeneralController
 {
     /**
      * @Route("/expos", name="admin_expos")
      */
     public function index(GeneralRepository $grepo, ExpoRepository $erepo)
     {
-        $general = $grepo->findOneBy(['id' => 1]);
-        if($general == null){
-            $general = [
-                "titreDuSiteHeader" => "Titre par défaut",
-                "texteHeader" => "Texte à écrire par défaut",
-                "motPageAccueil" => "Mot page d'accueil par défaut",
-                "photoAccueilPath" => null,
-                "textFooter" => "texte pied de page par défaut"
-            ];
-        }
-
         $expos = $erepo->findAllOrderByPos();
 
         return $this->render('admin/expos/index.html.twig', [
-            'general' => $general,
+            'general' => $this->general,
             'expos' => $expos
         ]);
     }
@@ -46,19 +36,7 @@ class AdminExposController extends AbstractController
      * @Route("/expos/add", name="admin_expo_add")
      * @Route("/expos/edit/{id}", name="admin_expo_edit")
      */
-    public function formCat(GeneralRepository $grepo, Expo $expo = null, Request $request, EntityManagerInterface $em, FileUploader $fileUploader){
-
-        $general = $grepo->findOneBy(['id' => 1]);
-        if($general == null){
-            $general = [
-                "titreDuSiteHeader" => "Titre par défaut",
-                "texteHeader" => "Texte à écrire par défaut",
-                "motPageAccueil" => "Mot page d'accueil par défaut",
-                "photoAccueilPath" => null,
-                "textFooter" => "texte pied de page par défaut"
-            ];
-        }
-
+    public function formCat(Expo $expo = null, Request $request, EntityManagerInterface $em, FileUploader $fileUploader){
         if(!$expo){
         $expo = new Expo;           
         }
@@ -93,7 +71,7 @@ class AdminExposController extends AbstractController
 
     return $this->render('admin/expos/addExpo.html.twig', [
             'form' => $form->createView(),
-            'general' => $general,
+            'general' => $this->general,
         ]);
 
     }

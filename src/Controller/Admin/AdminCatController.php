@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\GeneralController;
 use App\Form\CatType;
 use App\Service\FileUploader;
 use App\Entity\PhotoCategorie;
@@ -17,30 +18,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * @Route("/admin")
  */
-class AdminCatController extends AbstractController
+class AdminCatController extends GeneralController
 {
 
     /**
      * @Route("/cat", name="admin_categories")
      */
-    public function Index(GeneralRepository $grepo, PhotoCategorieRepository $pcrepo, PhotoRepository $prepo)
+    public function Index(PhotoCategorieRepository $pcrepo, PhotoRepository $prepo)
     {
-        $general = $grepo->findOneBy(['id' => 1]);
-        if($general == null){
-            $general = [
-                "titreDuSiteHeader" => "Titre par défaut",
-                "texteHeader" => "Texte à écrire par défaut",
-                "motPageAccueil" => "Mot page d'accueil par défaut",
-                "photoAccueilPath" => null,
-                "textFooter" => "texte pied de page par défaut"
-            ];
-        }
-
         // $cats = $pcrepo->findAll();
         $cats = $pcrepo->findAllOrderByPos();
 
         return $this->render('admin/cats/index.html.twig', [
-            'general' => $general,
+            'general' => $this->general,
             'cats' => $cats,
         ]);
     }
@@ -51,20 +41,8 @@ class AdminCatController extends AbstractController
      * @Route("/cat/editCat/{id}", name="admin_edit_cat")
      * @Route("/cat/addCat", name="admin_add_cat")
      */
-    public function add_cat(PhotoCategorie $cat = null, GeneralRepository $grepo, Request $request, EntityManagerInterface $em, FileUploader $fileUploader)
+    public function add_cat(PhotoCategorie $cat = null, Request $request, EntityManagerInterface $em, FileUploader $fileUploader)
     {
-
-        $general = $grepo->findOneBy(['id' => 1]);
-        if($general == null){
-            $general = [
-                "titreDuSiteHeader" => "Titre par défaut",
-                "texteHeader" => "Texte à écrire par défaut",
-                "motPageAccueil" => "Mot page d'accueil par défaut",
-                "photoAccueilPath" => null,
-                "textFooter" => "texte pied de page par défaut"
-            ];
-        }
-
         if(!$cat){
             $cat = new PhotoCategorie;
         }
@@ -94,7 +72,7 @@ class AdminCatController extends AbstractController
 
         return $this->render('admin/cats/addCat.html.twig', [
             'form' => $form->createView(),
-            'general' => $general,
+            'general' => $this->general,
             'cat' => $cat
         ]);
     }
@@ -103,7 +81,6 @@ class AdminCatController extends AbstractController
      * @Route("/cat/sort", name="admin_cat_sort")
      */
     public function sortableCat(Request $request, EntityManagerInterface $em, PhotoCategorieRepository $lrepo){
-
         $cat_id = $request->request->get('cat_id');
         $position = $request->request->get('position');
 
