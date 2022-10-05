@@ -7,7 +7,9 @@ use App\Entity\Lien;
 use App\Form\LienType;
 use App\Repository\LienRepository;
 use App\Repository\GeneralRepository;
+use App\Service\FileUploaderService;
 use Doctrine\ORM\EntityManagerInterface;
+use Liip\ImagineBundle\Exception\Config\Filter\NotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -75,5 +77,22 @@ class AdminLiensController extends GeneralController
       return new Response(true);
     } catch (\PdoException $e) {
     }
+  }
+
+  /**
+   * @Route("/liens/delete/{id}", name="admin_lien_delete")
+   */
+  public function deleteActu(Lien $lien = null, EntityManagerInterface $em, FileUploaderService $fileUploaderService)
+  {
+    if (!$lien) {
+      throw new NotFoundException('Lien non trouvé');
+    }
+
+    $em->remove($lien);
+    $em->flush();
+
+    $this->addFlash("success", "Le lien a bien été supprimé");
+
+    return $this->redirectToRoute('admin_lien');
   }
 }

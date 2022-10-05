@@ -4,16 +4,14 @@ namespace App\Controller\Admin;
 
 use App\Controller\GeneralController;
 use App\Form\CatType;
-use App\Service\FileUploader;
+use App\Service\FileUploaderService;
 use App\Entity\PhotoCategorie;
 use App\Repository\PhotoRepository;
-use App\Repository\GeneralRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PhotoCategorieRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin")
@@ -41,7 +39,7 @@ class AdminCatController extends GeneralController
    * @Route("/cat/editCat/{id}", name="admin_edit_cat")
    * @Route("/cat/addCat", name="admin_add_cat")
    */
-  public function add_cat(PhotoCategorie $cat = null, Request $request, EntityManagerInterface $em, FileUploader $fileUploader)
+  public function add_cat(PhotoCategorie $cat = null, Request $request, EntityManagerInterface $em, FileUploaderService $fileUploaderService)
   {
     if (!$cat) {
       $cat = new PhotoCategorie;
@@ -57,9 +55,8 @@ class AdminCatController extends GeneralController
 
     if ($form->isSubmitted() && $form->isValid()) {
       if ($imageFile = $form->get("path")->getData()) {
-        $id = $cat->getId();
-        $directory = "/photo/" . $id . "/cover";
-        $imageFileName = $fileUploader->upload($imageFile, $newFilename, $directory);
+        $directory = "/photo/cover";
+        $imageFileName = $fileUploaderService->upload($imageFile, $newFilename, $directory);
         $cat->setPhotoCoverPath($directory . "/" . $imageFileName);
       }
       $em->persist($cat);
@@ -74,6 +71,30 @@ class AdminCatController extends GeneralController
       'general' => $this->general,
       'cat' => $cat
     ]);
+  }
+
+  /**
+   * @Route("/cat/delete/{id}", name="admin_delete_cat")
+   */
+  public function deleteCat(PhotoCategorie $cat,EntityManagerInterface $em, PhotoRepository $prepo, FileUploaderService $fileUploaderService)
+  {
+    $photos = $prepo->getPhotoCatByPos($cat->getId());
+
+    $directory = "photo/" . $cat->getId();
+
+    $fileUploaderService->deleteTree($fileUploaderService->getTargetDirectory() . $directory);
+    $fileUploaderService->deleteFile($fileUploaderService->getTargetDirectory() . $cat->getPhotoCoverPath());
+
+    foreach($photos as $photo) {
+      $em->remove($photo);
+    } 
+
+    $this->addFlash("success", "La catégorie, et les photos associés, ont bien été supprimés");
+
+    $em->remove($cat);
+    $em->flush();
+
+    return $this->redirectToRoute('admin_categories');
   }
 
   /**
@@ -94,8 +115,4 @@ class AdminCatController extends GeneralController
     } catch (\PdoException $e) {
     }
   }
-
-  public function deleteCat()
-  {
-  } // TODO
 }

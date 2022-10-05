@@ -27,7 +27,7 @@
                     {% endif %}
                     ">
       <figcaption>{{ photo.titre }} <a href="{{ path('admin_edit_photo', {'id_cat':cat.id, 'id_photo':photo.id})}}"><i
-            class="fas fa-pen-square"></i></a></figcaption>
+            class="fas fa-pen-square text-warning"></i></a><a onclick="return confirm('Êtes-vous sûre de vouloir supprimer cet élément ?')" href="{{ path('admin_delete_photo', {'id':photo.id})}}"><i class="fas fa-minus-square text-danger"></i></a></figcaption>
     </figure>
 
     <!-- <details>

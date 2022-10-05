@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Photo;
 use App\Form\PhotoType;
 use App\Form\PhotoEditType;
-use App\Service\FileUploader;
+use App\Service\FileUploaderService;
 use App\Entity\PhotoCategorie;
 use App\Repository\PhotoRepository;
 use App\Repository\GeneralRepository;
@@ -50,7 +50,7 @@ class AdminPhotoController extends AbstractController
   /**
    * @Route("/cat/{id}/addPhoto", name="admin_add_photo")
    */
-  public function addPhoto(PhotoCategorie $cat, GeneralRepository $grepo, PhotoCategorieRepository $pcrepo, Request $request, EntityManagerInterface $em, FileUploader $fileUploader)
+  public function addPhoto(PhotoCategorie $cat, GeneralRepository $grepo, PhotoCategorieRepository $pcrepo, Request $request, EntityManagerInterface $em, FileUploaderService $fileUploaderService)
   {
     $general = $grepo->findOneBy(['id' => 1]);
     if ($general == null) {
@@ -69,12 +69,7 @@ class AdminPhotoController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-
-
-
       if ($imageFile = $form->get("path")->getData()) {
-
-
         $exif = @\exif_read_data($imageFile);
 
         if ($exif) {
@@ -91,7 +86,7 @@ class AdminPhotoController extends AbstractController
 
         $newFilename = $photo->getTitre();
         $directory = "/photo/" . $cat->getId() . "/photo";
-        $imageFileName = $fileUploader->upload($imageFile, $newFilename, $directory);
+        $imageFileName = $fileUploaderService->upload($imageFile, $newFilename, $directory);
         $photo->setPath($directory . "/" . $imageFileName);
         $photo->setPhotoCategorie($cat);
       }
@@ -115,7 +110,7 @@ class AdminPhotoController extends AbstractController
    * @ParamConverter("cat", options={"mapping": {"id_cat" : "id"}})
    * @ParamConverter("photo", options={"mapping": {"id_photo" : "id"}})
    */
-  public function editPhoto(PhotoCategorie $cat, Photo $photo, GeneralRepository $grepo, PhotoCategorieRepository $pcrepo, Request $request, FileUploader $fileUploader, EntityManagerInterface $em)
+  public function editPhoto(PhotoCategorie $cat, Photo $photo, GeneralRepository $grepo, PhotoCategorieRepository $pcrepo, Request $request, FileUploaderService $fileUploaderService, EntityManagerInterface $em)
   {
     $general = $grepo->findOneBy(['id' => 1]);
     if ($general == null) {
@@ -188,7 +183,20 @@ class AdminPhotoController extends AbstractController
   //     }
   // }
 
-  public function deletePhoto()
+  /**
+   * @Route("/photo/delete/{id}", name="admin_delete_photo")
+   */
+  public function deletePhoto(Photo $photo, EntityManagerInterface $em, PhotoRepository $prepo, FileUploaderService $fileUploaderService)
   {
-  } // TODO
+    $cat = $photo->getPhotoCategorie();
+
+    $fileUploaderService->deleteFile($fileUploaderService->getTargetDirectory() . $photo->getPath());
+
+    $em->remove($photo);
+    $em->flush();
+
+    $this->addFlash("success", "La photo a bien été supprimée");
+
+    return $this->redirectToRoute('admin_cat_photos', ['id' => $cat->getId()]);
+  }
 }

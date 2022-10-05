@@ -20,7 +20,8 @@
     <div class="rounded border">
       <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">
         <h3>{{ cat.titre }} ({{ cat.photos|length }})
-          <a href="{{ path('admin_edit_cat', {'id':cat.id})}}"><i class="fas fa-pen-square"></i></a>
+          <a href="{{ path('admin_edit_cat', {'id':cat.id})}}"><i class="fas fa-pen-square text-warning"></i></a>
+          <a onclick="return confirm('Êtes-vous sûre de vouloir supprimer cette catégorie ? Cela supprimera aussi les photos qui sont relié à cette catégorie')" href="{{ path('admin_delete_cat', {'id':cat.id})}}"><i class="fas fa-minus-square text-danger"></i></a>
         </h3>
       </a>
       <a href="{{ path('admin_cat_photos', {'id':cat.id}) }}">

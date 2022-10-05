@@ -5,12 +5,11 @@ namespace App\Controller\Admin;
 use App\Controller\GeneralController;
 use App\Entity\General;
 use App\Form\GeneralType;
-use App\Service\FileUploader;
+use App\Service\FileUploaderService;
 use App\Repository\GeneralRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Flasher\Prime\FlasherInterface;
 
 /**
  * @Route("/admin")
@@ -28,7 +27,7 @@ class AdminController extends GeneralController
   /**
    * @Route("/general", name="admin_general")
    */
-  public function general(Request $request, EntityManagerInterface $em, GeneralRepository $grepo, FileUploader $fileUploader)
+  public function general(Request $request, EntityManagerInterface $em, GeneralRepository $grepo, FileUploaderService $fileUploaderService)
   {
     $generalForm = $grepo->findOneBy(['id' => 1]);
     if (!$generalForm) {
@@ -44,7 +43,7 @@ class AdminController extends GeneralController
       if ($imageFile = $form->get("photo_accueil_path")->getData()) {
         $newFilename = "home";
         $directory = "general";
-        $imageFileName = $fileUploader->upload($imageFile, $newFilename, $directory);
+        $imageFileName = $fileUploaderService->upload($imageFile, $newFilename, $directory);
         $generalForm->setPhotoAccueilPath($directory . "/" . $imageFileName);
       }
 

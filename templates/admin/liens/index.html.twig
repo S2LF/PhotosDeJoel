@@ -15,13 +15,14 @@
   </h3>
   </p>
   {% else %}
-  <section class="draggable m-auto">
+  <section class="draggable">
     {% for lien in liens %}
     <article class="m-3" data-id="{{ lien.id }}">
       <div class="rounded border p-2 d-flex">
         <div class="d-flex align-items-center">
-          <h3>{{lien.titre}}&nbsp;&nbsp;<a href="{{ path('admin_lien_edit', {'id':lien.id})}}"><i
-                class="fas fa-pen-square"></i></a>
+          <h3>{{lien.titre}}&nbsp;<a href="{{ path('admin_lien_edit', {'id':lien.id})}}"><i
+                class="fas fa-pen-square text-warning"></i></a><a onclick="return confirm('Êtes-vous sûre de vouloir supprimer cet élément ?')" href="{{ path('admin_lien_delete', {'id':lien.id})}}"><i class="fas fa-minus-square text-danger"></i></a>
+
             <small>&nbsp;-&nbsp;<a href="{{ lien.lien | raw}}" target="_blank">{{ lien.lien }}</a></small>
           </h3>
         </div>

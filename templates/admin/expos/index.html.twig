@@ -15,7 +15,7 @@
   </h3>
   </p>
   {% else %}
-  <section class="draggable">
+  <section class="draggable col-4 offset-4">
     {% for expo in expos %}
     {% if expo.path is null %}
     <article class="row text-center justify-content-center m-3" data-id="{{ expo.id }}">
@@ -25,8 +25,9 @@
           <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
         </figure>
         {% endif %}
-        <p>Titre : {{expo.titre}} <a href="{{ path('admin_expo_edit', {'id':expo.id})}}"><i
-              class="fas fa-pen-square"></i></a> <br>
+        <p>Titre : {{expo.titre}}&nbsp;<a href="{{ path('admin_expo_edit', {'id':expo.id})}}"><i class="fas fa-pen-square text-warning"></i></a>
+        <a onclick="return confirm('Êtes-vous sûre de vouloir supprimer cet élément ?')" href="{{ path('admin_expo_delete', {'id':expo.id})}}"><i class="fas fa-minus-square text-danger"></i></a>
+        <br>
           Date de l'expo : {{ expo.dateEvent |date('d/m/Y') }} <br>
           Date de création : {{expo.dateCreation |date('d/m/Y') }}<br>
           Contenu :<br>{{ expo.contenu }}</p>
@@ -41,8 +42,9 @@
           <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
         </figure>
         {% endif %}
-        <p>Titre : {{expo.titre}} <a href="{{ path('admin_expo_edit', {'id':expo.id})}}"><i
-              class="fas fa-pen-square"></i></a> <br>
+        <p>Titre : {{expo.titre}}&nbsp;<a href="{{ path('admin_expo_edit', {'id':expo.id})}}"><i  class="fas fa-pen-square text-warning"></i></a>
+          <a onclick="return confirm('Êtes-vous sûre de vouloir supprimer cet élément ?')" href="{{ path('admin_expo_delete', {'id':expo.id})}}"><i class="fas fa-minus-square text-danger"></i></a>
+          <br>
           Date de l'expo : {{ expo.dateEvent |date('d/m/Y') }} <br>
           Date de création : {{expo.dateCreation |date('d/m/Y') }}<br>
           Contenu :<br>{{ expo.contenu }}</p>
@@ -56,16 +58,16 @@
           <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
         </figure>
         {% endif %}
-        <p>Titre : {{expo.titre}} <a href="{{ path('admin_expo_edit', {'id':expo.id})}}"><i
-              class="fas fa-pen-square"></i></a> <br>
+        <p>Titre : {{expo.titre}}&nbsp;<a href="{{ path('admin_expo_edit', {'id':expo.id})}}"><i class="fas fa-pen-square text-warning"></i></a>
+          <a onclick="return confirm('Êtes-vous sûre de vouloir supprimer cet élément ?')" href="{{ path('admin_expo_delete', {'id':expo.id})}}"><i class="fas fa-minus-square text-danger"></i></a>
+          <br>
           Date de l'expo : {{ expo.dateEvent |date('d/m/Y') }} <br>
           Date de création : {{expo.dateCreation |date('d/m/Y') }}<br>
           Contenu :<br>{{ expo.contenu }}</p>
       </div>
     </article>
-
     {% endif %}
-
+    {% endif %}
     {% endfor %}
   </section>
   {% endif %}

@@ -24,7 +24,7 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    App\Service\FileUploader:
+    App\Service\FileUploaderService:
         arguments:
             $targetDirectory: "%img_directory%"
     # add more service definitions when explicit configuration is needed

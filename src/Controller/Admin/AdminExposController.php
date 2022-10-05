@@ -5,10 +5,11 @@ namespace App\Controller\Admin;
 use App\Controller\GeneralController;
 use App\Entity\Expo;
 use App\Form\ExpoType;
-use App\Service\FileUploader;
+use App\Service\FileUploaderService;
 use App\Repository\ExpoRepository;
 use App\Repository\GeneralRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Liip\ImagineBundle\Exception\Config\Filter\NotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,7 +37,7 @@ class AdminExposController extends GeneralController
    * @Route("/expos/add", name="admin_expo_add")
    * @Route("/expos/edit/{id}", name="admin_expo_edit")
    */
-  public function formCat(Expo $expo = null, Request $request, EntityManagerInterface $em, FileUploader $fileUploader)
+  public function formCat(Expo $expo = null, Request $request, EntityManagerInterface $em, FileUploaderService $fileUploaderService)
   {
     if (!$expo) {
       $expo = new Expo;
@@ -60,7 +61,7 @@ class AdminExposController extends GeneralController
       if ($imageFile = $form->get("path")->getData()) {
         $id = $expo->getId();
         $directory = "/expo/" . $id;
-        $imageFileName = $fileUploader->upload($imageFile, $newFilename, $directory);
+        $imageFileName = $fileUploaderService->upload($imageFile, $newFilename, $directory);
         $expo->setPath($directory . "/" . $imageFileName);
 
         $em->persist($expo);
@@ -93,5 +94,26 @@ class AdminExposController extends GeneralController
       return new Response(true);
     } catch (\PdoException $e) {
     }
+  }
+
+  /**
+   * @Route("/expo/delete/{id}", name="admin_expo_delete")
+   */
+  public function deleteActExpou(Expo $expo = null, EntityManagerInterface $em, FileUploaderService $fileUploaderService)
+  {
+    if (!$expo) {
+      throw new NotFoundException('Exposition non trouvé');
+    }
+
+    if ($expo->getPath() !== null) {
+      $fileUploaderService->deleteFile($fileUploaderService->getTargetDirectory() . $expo->getPath());
+    }
+
+    $em->remove($expo);
+    $em->flush();
+
+    $this->addFlash("success", "L'exposition a bien été supprimé");
+
+    return $this->redirectToRoute('admin_expos');
   }
 }
