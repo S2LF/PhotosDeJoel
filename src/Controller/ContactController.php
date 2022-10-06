@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -21,6 +23,12 @@ class ContactController extends GeneralController
   public function index(Request $request, MailerInterface $mailer): Response
   {
     $contactForm = $this->createFormBuilder()
+      ->add('captcha', Recaptcha3Type::class, [
+        'constraints' => new Recaptcha3 ([
+            'message' => 'karser_recaptcha3.message',
+            'messageMissingValue' => 'karser_recaptcha3.message_missing_value',
+        ]),
+      ])
       ->add('name', TextType::class, [
         'label' => 'Votre nom',
         'attr' => [
