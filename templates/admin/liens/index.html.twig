@@ -9,22 +9,27 @@
 <h2 class="text-center">Gestion des liens</h2>
 <div class="container">
   {% if liens|length == 0 %}
-    <p>
-      <h3 class="text-center">
-        Aucun lien
-      </h3>
-    </p>
+  <p>
+  <h3 class="text-center">
+    Aucun lien
+  </h3>
+  </p>
   {% else %}
-      <section class="draggable">
-          {% for lien in liens %}
-              <article class="m-3" data-id="{{ lien.id }}" >
-                <div class="rounded border p-2">
-                  <p>{{lien.titre}}<a href="{{ path('admin_lien_edit', {'id':lien.id})}}"><i class="fas fa-pen-square"></i></a></p>
-                  <p>{{ lien.lien }}</p>
-                </div>
-              </article>
-          {% endfor %}
-      </section>    
+  <section class="draggable">
+    {% for lien in liens %}
+    <article class="m-3" data-id="{{ lien.id }}">
+      <div class="rounded border p-2 d-flex">
+        <div class="d-flex align-items-center">
+          <h3>{{lien.titre}}&nbsp;<a href="{{ path('admin_lien_edit', {'id':lien.id})}}"><i
+                class="fas fa-pen-square text-warning"></i></a><a onclick="return confirm('Êtes-vous sûre de vouloir supprimer cet élément ?')" href="{{ path('admin_lien_delete', {'id':lien.id})}}"><i class="fas fa-minus-square text-danger"></i></a>
+
+            <small>&nbsp;-&nbsp;<a href="{{ lien.lien | raw}}" target="_blank">{{ lien.lien }}</a></small>
+          </h3>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </section>
   {% endif %}
   <div class="text-center">
     <a href="{{ path('admin_lien_add') }}" class="btn btn-success">Ajouter un lien</a>
@@ -37,27 +42,22 @@
 
 <script>
   jQuery('.draggable').sortable({
-    stop:function(event, ui){
+    stop: function (event, ui) {
       let id = ui.item.attr('data-id')
-      console.log("id:"+id)
+      console.log("id:" + id)
       let position = ui.item.index()
-      console.log("pos:"+position)
+      console.log("pos:" + position)
       $.post(
         "{{ path('admin_lien_sort') }}",
         {
           'lien_id': id,
           'position': position
         },
-        function(data){
+        function (data) {
           console.log(data)
         }
       )
-
     }
-    
-
-
-
   })
 </script>
 

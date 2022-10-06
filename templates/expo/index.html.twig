@@ -1,39 +1,85 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les Photos de Joël | Catégories de photos{% endblock %}
+{% block title %}Les Photos de Joël | Expositions{% endblock %}
 
 {% block body %}
+<h1 class="text-center">Expositions</h1>
 <section class="row text-center">
-    {% if expos|length == 0 %}
-    <p>
-      <h3 class="text-center">
-        Aucune exposition
-      </h3>
-    </p>
+
+  {% if expos|length == 0 %}
+  <p>
+  <h3 class="text-center">
+    Aucune exposition
+  </h3>
+  </p>
   {% else %}
-      <section class="m-auto">
-          {% for expo in expos %}
-              <article class="m-3">
-                <div class="p-2 d-flex">
-                    <div>
-                        {% if expo.path %}                    
-                            <figure class="m-1 mr-2">
-                            <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
-                            </figure>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <h3>{{expo.titre}}</h3> <span>{{expo.dateCreation |date('d/m/Y') }}</span>
-                        <p>
-                            Date de l'exposition : {{ expo.dateEvent |date('d/m/Y') }}
-                            <br>
-                            {{ expo.contenu }}
-                        </p>                        
-                    </div>
-                </div>
-              </article>
-          {% endfor %}
-      </section>    
+  <section class="m-auto">
+    {% for expo in expos %}
+    {% if expo.path is null %}
+    <article class="m-3">
+      <div class="p-2 d-flex flex-column">
+        <div>
+          {% if expo.path %}
+          <figure class="m-1 mr-2">
+            <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
+          </figure>
+          {% endif %}
+        </div>
+        <div>
+          <h3>{{expo.titre}}</h3> <span>{{expo.dateCreation |date('d/m/Y') }}</span>
+          <p>
+            Date de l'exposition : {{ expo.dateEvent |date('d/m/Y') }}
+            <br>
+            {{ expo.contenu | raw}}
+          </p>
+        </div>
+      </div>
+    </article>
+    {% else %}
+    {% if loop.index is odd %}
+    <article class="m-3">
+      <div class="p-2 d-flex">
+        <div>
+          {% if expo.path %}
+          <figure class="m-1 mr-2">
+            <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
+          </figure>
+          {% endif %}
+        </div>
+        <div>
+          <h3>{{expo.titre}}</h3> <span>{{expo.dateCreation |date('d/m/Y') }}</span>
+          <p>
+            Date de l'exposition : {{ expo.dateEvent |date('d/m/Y') }}
+            <br>
+            {{ expo.contenu | raw}}
+          </p>
+        </div>
+      </div>
+    </article>
+    {% else %}
+    <article class="m-3">
+      <div class="p-2 d-flex flex-row-reverse">
+        <div>
+          {% if expo.path %}
+          <figure class="m-1 mr-2">
+            <img style="width: 100px;" src="{{ asset('/img/' ~ expo.path) }}" alt="">
+          </figure>
+          {% endif %}
+        </div>
+        <div>
+          <h3>{{expo.titre}}</h3> <span>{{expo.dateCreation |date('d/m/Y') }}</span>
+          <p>
+            Date de l'exposition : {{ expo.dateEvent |date('d/m/Y') }}
+            <br>
+            {{ expo.contenu | raw}}
+          </p>
+        </div>
+      </div>
+    </article>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+  </section>
   {% endif %}
 </section>
 

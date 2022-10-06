@@ -11,118 +11,118 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Actualite
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+  /**
+   * @ORM\Id()
+   * @ORM\GeneratedValue()
+   * @ORM\Column(type="integer")
+   */
+  private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $categorie;
+  /**
+   * @ORM\Column(type="string", length=255)
+   */
+  private $categorie;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $titre;
+  /**
+   * @ORM\Column(type="string", length=255)
+   */
+  private $titre;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $date_creation;
+  /**
+   * @ORM\Column(type="datetime")
+   */
+  private $date_creation;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $contenu;
+  /**
+   * @ORM\Column(type="text")
+   */
+  private $contenu;
 
-    /**
-     * @Gedmo\SortablePosition
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $position;
+  /**
+   * @Gedmo\SortablePosition
+   * @ORM\Column(type="integer", nullable=false)
+   */
+  private $position;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $path;
+  /**
+   * @ORM\Column(type="string", length=255, nullable=true)
+   */
+  private $path;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+  public function getId(): ?int
+  {
+    return $this->id;
+  }
 
-    public function getCategorie(): ?string
-    {
-        return $this->categorie;
-    }
+  public function getCategorie(): ?string
+  {
+    return $this->categorie;
+  }
 
-    public function setCategorie(string $categorie): self
-    {
-        $this->categorie = $categorie;
+  public function setCategorie(string $categorie): self
+  {
+    $this->categorie = $categorie;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    public function getTitre(): ?string
-    {
-        return $this->titre;
-    }
+  public function getTitre(): ?string
+  {
+    return $this->titre;
+  }
 
-    public function setTitre(string $titre): self
-    {
-        $this->titre = $titre;
+  public function setTitre(string $titre): self
+  {
+    $this->titre = $titre;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    public function getDateCreation(): ?\DateTimeInterface
-    {
-        return $this->date_creation;
-    }
+  public function getDateCreation(): ?\DateTimeInterface
+  {
+    return $this->date_creation;
+  }
 
-    public function setDateCreation(\DateTimeInterface $date_creation): self
-    {
-        $this->date_creation = $date_creation;
+  public function setDateCreation(\DateTimeInterface $date_creation): self
+  {
+    $this->date_creation = $date_creation;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    public function getContenu(): ?string
-    {
-        return $this->contenu;
-    }
+  public function getContenu(): ?string
+  {
+    return $this->contenu;
+  }
 
-    public function setContenu(string $contenu): self
-    {
-        $this->contenu = $contenu;
+  public function setContenu(string $contenu): self
+  {
+    $this->contenu = $contenu;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
+  public function getPosition(): ?int
+  {
+    return $this->position;
+  }
 
-    public function setPosition(?int $position): self
-    {
-        $this->position = $position;
+  public function setPosition(?int $position): self
+  {
+    $this->position = $position;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    public function getPath(): ?string
-    {
-        return $this->path;
-    }
+  public function getPath(): ?string
+  {
+    return $this->path;
+  }
 
-    public function setPath(?string $path): self
-    {
-        $this->path = $path;
+  public function setPath(?string $path): self
+  {
+    $this->path = $path;
 
-        return $this;
-    }
+    return $this;
+  }
 }

@@ -14,52 +14,24 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ExpoRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Expo::class);
-    }
-   
-    /**
-     * findAllOrderByPos
-     *
-     * @return void
-     */
-    public function findAllOrderByPos(){
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager ->createQuery(
-            "SELECT e
-                FROM App\Entity\Expo e
-                ORDER BY e.position ASC"
-        );
-        return $query->execute();
-    }
+  public function __construct(ManagerRegistry $registry)
+  {
+    parent::__construct($registry, Expo::class);
+  }
 
-    // /**
-    //  * @return Expo[] Returns an array of Expo objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Expo
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+  /**
+   * findAllOrderByPos
+   *
+   * @return void
+   */
+  public function findAllOrderByPos()
+  {
+    $entityManager = $this->getEntityManager();
+    $query = $entityManager->createQuery(
+      "SELECT e
+      FROM App\Entity\Expo e
+      ORDER BY e.position ASC"
+    );
+    return $query->execute();
+  }
 }

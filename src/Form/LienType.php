@@ -10,22 +10,21 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class LienType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('titre', TextType::class, [
-                'label' => 'Titre*:'
-            ])
-            ->add('lien', TextType::class, [
-                'label' => 'Lien*:'
-            ])
-        ;
-    }
+  public function buildForm(FormBuilderInterface $builder, array $options)
+  {
+    $builder
+      ->add('titre', TextType::class, [
+        'label' => 'Titre*:'
+      ])
+      ->add('lien', TextType::class, [
+        'label' => 'Lien*:'
+      ]);
+  }
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => Lien::class,
-        ]);
-    }
+  public function configureOptions(OptionsResolver $resolver)
+  {
+    $resolver->setDefaults([
+      'data_class' => Lien::class,
+    ]);
+  }
 }
