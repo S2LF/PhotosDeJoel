@@ -2,21 +2,23 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\GeneralController;
 use App\Entity\Expo;
 use App\Form\ExpoType;
-use App\Service\FileUploaderService;
 use App\Repository\ExpoRepository;
+use App\Service\FileUploaderService;
+use App\Controller\GeneralController;
 use App\Repository\GeneralRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Liip\ImagineBundle\Exception\Config\Filter\NotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Liip\ImagineBundle\Exception\Config\Filter\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin")
+ * @IsGranted("ROLE_ADMIN")
  */
 class AdminExposController extends GeneralController
 {

@@ -5,20 +5,22 @@ namespace App\Controller\Admin;
 use App\Entity\Photo;
 use App\Form\PhotoType;
 use App\Form\PhotoEditType;
-use App\Service\FileUploaderService;
 use App\Entity\PhotoCategorie;
 use App\Repository\PhotoRepository;
+use App\Service\FileUploaderService;
 use App\Repository\GeneralRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PhotoCategorieRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/admin")
+ * @IsGranted("ROLE_ADMIN")
  */
 class AdminPhotoController extends AbstractController
 {
@@ -162,26 +164,6 @@ class AdminPhotoController extends AbstractController
     } catch (\PdoException $e) {
     }
   }
-
-  // /**
-  //  * @Route("/photo/sort", name="admin_photo_sort")
-  //  */
-  // public function sortablePhoto(Request $request, EntityManagerInterface $em, PhotoRepository $prepo){
-
-  //     $photo_id = $request->request->get('photo_id');
-  //     $position = $request->request->get('position');
-
-  //     $photo = $prepo->findOneBy(['id' => $photo_id ]);
-
-  //     $photo->setPosition($position);
-
-  //     try{
-  //         $em->flush();
-  //         return new Response(true);
-  //     }catch(\PdoException $e){
-
-  //     }
-  // }
 
   /**
    * @Route("/photo/delete/{id}", name="admin_delete_photo")

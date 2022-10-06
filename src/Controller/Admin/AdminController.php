@@ -2,17 +2,19 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\GeneralController;
 use App\Entity\General;
 use App\Form\GeneralType;
 use App\Service\FileUploaderService;
+use App\Controller\GeneralController;
 use App\Repository\GeneralRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/admin")
+ * @IsGranted("ROLE_ADMIN")
  */
 class AdminController extends GeneralController
 {

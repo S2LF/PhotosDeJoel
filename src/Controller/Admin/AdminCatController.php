@@ -2,19 +2,21 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\GeneralController;
 use App\Form\CatType;
-use App\Service\FileUploaderService;
 use App\Entity\PhotoCategorie;
 use App\Repository\PhotoRepository;
+use App\Service\FileUploaderService;
+use App\Controller\GeneralController;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PhotoCategorieRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/admin")
+ * @IsGranted("ROLE_ADMIN")
  */
 class AdminCatController extends GeneralController
 {

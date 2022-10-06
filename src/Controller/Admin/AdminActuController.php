@@ -6,7 +6,6 @@ use App\Controller\GeneralController;
 use App\Form\ActuType;
 use App\Entity\Actualite;
 use App\Service\FileUploaderService;
-use App\Repository\GeneralRepository;
 use App\Repository\ActualiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Error;
@@ -14,10 +13,11 @@ use Liip\ImagineBundle\Exception\Config\Filter\NotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/admin")
+ * @IsGranted("ROLE_ADMIN")
  */
 class AdminActuController extends GeneralController
 {
@@ -26,7 +26,6 @@ class AdminActuController extends GeneralController
    */
   public function index(ActualiteRepository $arepo)
   {
-    // $actus = $arepo->findAll();
     $actus = $arepo->findAllOrderByPos();
 
 
