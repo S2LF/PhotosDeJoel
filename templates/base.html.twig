@@ -43,8 +43,11 @@
 
   {% block body %}{% endblock %}
 
-  <footer class="text-center pt-5 pb-2">
+  <footer class="text-center pt-5 pb-2 position-relative">
     {{ general.textFooter|raw }}
+    <p class="position-absolute" style="right:0px; bottom:-5px" >
+      <a href="{{ path('admin') }}">Espace admin</a>
+    </p>
   </footer>
 
   {% block javascripts %}
