@@ -44,7 +44,7 @@ class AdminController extends GeneralController
 
       if ($imageFile = $form->get("photo_accueil_path")->getData()) {
         $newFilename = "home";
-        $directory = "general";
+        $directory = "/general/";
         $imageFileName = $fileUploaderService->upload($imageFile, $newFilename, $directory);
         $generalForm->setPhotoAccueilPath($directory . "/" . $imageFileName);
       }
