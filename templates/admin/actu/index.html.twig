@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les Photos de Joël | Admin - Actualités{% endblock %}
+{% block title %}Les Photos de Joël | Admin - Créer actualité{% endblock %}
 
 {% block body %}
 
@@ -17,17 +17,17 @@
   </h3>
   </p>
   {% else %}
-  <section class="draggable col-4 offset-4">
+  <section class="draggable">
     {% for actu in actus %}
     {% if actu.path is null %}
     <article class="text-center justify-content-center m-3" data-id="{{ actu.id }}">
       <div class="rounded border p-2 d-flex flex-column">
         {% if actu.path %}
         <figure class="m-1 mr-2 align-self-center">
-          <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
+          <img src="{{ asset('/img/' ~ actu.path) | imagine_filter('expo') }}" alt="">
         </figure>
         {% endif %}
-        <div>
+        <div class="d-flex flex-column justify-content-center">
           <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }}&nbsp;
             <a href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square text-warning"></i></a>
             <a onclick="return confirm('Êtes-vous sûre de vouloir supprimer cet élément ?')" href="{{ path('admin_actu_delete', {'id':actu.id})}}"><i class="fas fa-minus-square text-danger"></i></a>
@@ -42,10 +42,10 @@
       <div class="rounded border p-2 d-flex">
         {% if actu.path %}
         <figure class="m-1 mr-2 align-self-center">
-          <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
+          <img src="{{ asset('/img/' ~ actu.path) | imagine_filter('expo') }}" alt="">
         </figure>
         {% endif %}
-        <div>
+        <div class="d-flex flex-column justify-content-center">
           <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }}&nbsp;
             <a href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square text-warning"></i></a>
             <a onclick="return confirm('Êtes-vous sûre de vouloir supprimer cet élément ?')" href="{{ path('admin_actu_delete', {'id':actu.id})}}"><i class="fas fa-minus-square text-danger"></i></a>
@@ -59,10 +59,10 @@
       <div class="rounded border p-2 d-flex flex-row-reverse">
         {% if actu.path %}
         <figure class="m-1 mr-2 align-self-center">
-          <img style="width: 100px;" src="{{ asset('/img/' ~ actu.path) }}" alt="">
+          <img src="{{ asset('/img/' ~ actu.path) | imagine_filter('expo') }}" alt="">
         </figure>
         {% endif %}
-        <div>
+        <div class="d-flex flex-column justify-content-center">
           <p>{{actu.categorie}} - {{actu.dateCreation|date('d/m/Y') }}&nbsp;
             <a href="{{ path('admin_actu_edit', {'id':actu.id})}}"><i class="fas fa-pen-square text-warning"></i></a>
             <a onclick="return confirm('Êtes-vous sûre de vouloir supprimer cet élément ?')" href="{{ path('admin_actu_delete', {'id':actu.id})}}"><i class="fas fa-minus-square text-danger"></i></a>
